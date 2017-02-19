@@ -1,0 +1,109 @@
+// ESTO ES UN FICHERO QUE GUARDA LOS MAPAS DE LAS PANTALLAS. SU FORMATO ES EL SIGUIENTE:
+//
+//     - Una línea que empieza con los caracteres '//' es una línea a ignorar
+//     - Cada línea de texto representa una fila en el mapa del juego, con los caracteres pertenecientes al tipo
+//       de objeto en escena ahí situado.
+//     - Las líneas tendrán una longitud dada por la constante Const.NIVEL_COLUMNAS. Todo lo que se añada a partir de
+//       esa columna será ignorado
+//     - Cada nivel tendrá un número de líneas dado por la constante Const.NIVEL_FILAS
+//     - Una línea que empieza con los caracteres '---' indica que ahí acaban los datos de un nivel
+//     - Una línea que empieza con los caracteres '===' indica que ya se han leído todos los niveles
+//     - El archivo, pues, deberá acabar con una línea '---' seguida de una línea '==='
+//
+// Nivel 1
+                |
+                |  Para evitar ArrayIndexOutOfBoundsExceptions y NullpointerExceptions,
+                |  me aseguro que cada fila tiene un número de caracteres mínimo poniendo
+   #            |  estas marcas '|' en la posición Const.NIVEL_COLUMNAS+1, sabiendo que
+  #L#           |  el código que lea esto ignorará todo lo que vaya a partir de esa posición
+  # #           |
+  # #           |
+  # #########   |
+  #J        P#  |
+   ##########   |
+                |
+                |
+                |
+                |
+---
+// Nivel 2
+                |
+                |
+                |
+                |
+                |
+ ############## |
+#S      J H L P#|
+ ############## |
+                |
+                |
+                |
+                |
+                |
+                |
+---
+// Nivel 3
+                |
+                |
+       #        |
+      #H#       |
+      # #       |
+  ####  ####### |
+ # J   S F L P# |
+  ##### ######  |
+      # #       |
+      #A#       |
+       #        |
+                |
+                |
+                |
+---
+//Nivel 4
+#   #  #  #   # |
+## ## # # #  # #|
+# # # # # #  ###|
+#   #  #  ## # #|
+      ###       |
+######R  #######|
+#LTTFS   HHARP##|
+####AS   #######|
+    ##J  #      |
+#   ###  ###  ##|
+ ###   ##   ##  |
+ #  # #  # #  # |
+ ###  #  # #  # |
+ #     ##   ##  |
+---
+// Nivel 5
+                |
+                |
+ ##########     |
+ #TF## J  ####  |
+ ##AH  ##T RS#  |
+ ####F####H#### |
+ #P # SHR T# L# |
+ #   ##  ##   # |
+ ### FTR AR ### |
+   #  F##R  #   |
+   ### ##A###   |
+     ######     |
+                |
+                |
+---
+// Nivel 6
+                |
+################|
+#      J       #|
+#      T       #|
+#RRRRRRRRRRRRR# |
+ #RAHHFTFSFRT#  |
+  #FTFSFHFSH#   |
+   #HAHTFRH#    |
+    #HRFRA#     |
+     #FRR#      |
+      #L#       |
+      #P#       |
+      ###       |
+                |
+---
+===
