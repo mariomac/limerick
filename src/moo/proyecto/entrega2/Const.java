@@ -6,10 +6,10 @@ package moo.proyecto.entrega2;
  * concreto contiene constantes para:
  * <br>...Indicar el número de filas y de columnas del recinto.
  * <br>...Indicar los nombres relativos de los archivos en los que se encuentran
- * las imágenes de los obstáculos y los elementos que permiten vencerlos.
+ * las imagenes de los obstáculos y los elementos que permiten vencerlos.
  * <br>...Caracteres que permiten crear, vía código, los recintos de los
- * diferentes niveles. 
- * 
+ * diferentes niveles.
+ *
  * Para construir el recinto, el diseñador de niveles genera un
  * mapa de caracteres. Se trata de un vector bidireccional (matriz) de idénticas
  * dimensiones a las del recinto del juego. El carácter presente en cada
@@ -34,53 +34,39 @@ public class Const {
     public static final int NIVEL_FILAS = 14;
 
     /**
-     * Nombre relativo del archivo en el que está la imágen del
-     * jugador-personaje
+     * Nombre relativo del archivo en el que está la imagen de la cara de la serpiente
      */
-    public static final String ARCHIVO_JUGADOR = "/imagenes/jugador.png";
+    public static final String ARCHIVO_CARA = "/imagenes/cara.png";
+
     /**
-     * Nombre relativo del archivo en el que está la imágen de la pared
+     * Nombre relativo del archivo en el que está la imagen de la cara de la serpiente
+     */
+    public static final String ARCHIVO_CUERPO = "/imagenes/cuerpo.png";
+
+    /**
+     * Nombre relativo del archivo en el que está la imagen de la caja de la serpiente
+     */
+    public static final String ARCHIVO_CAJA = "/imagenes/caja.png";
+
+    /**
+     * Nombre relativo del archivo en el que está la imagen de la pared
      */
     public static final String ARCHIVO_PARED = "/imagenes/pared.png";
-    /**
-     * Nombre relativo del archivo en el que está la imágen de la puerta
-     */
-    public static final String ARCHIVO_PUERTA = "/imagenes/puerta.png";
-    /**
-     * Nombre relativo del archivo en el que está la imágen de la llave
-     */
-    public static final String ARCHIVO_LLAVE = "/imagenes/llave.png";
-    /**
-     * Nombre relativo del archivo en el que está la imágen del soplete
-     */
-    public static final String ARCHIVO_SOPLETE = "/imagenes/soplete.png";
-    /**
-     * Nombre relativo del archivo en el que está la imágen del hielo
-     */
-    public static final String ARCHIVO_HIELO = "/imagenes/hielo.png";
-    /**
-     * Nombre relativo del archivo en el que está la imágen del agua
-     */
-    public static final String ARCHIVO_AGUA = "/imagenes/agua.png";
-    /**
-     * Nombre relativo del archivo en el que está la imágen del fuego
-     */
-    public static final String ARCHIVO_FUEGO = "/imagenes/fuego.png";
-    /**
-     * Nombre relativo del archivo en el que está la imágen de un pico
-     */
-    public static final String ARCHIVO_PICO = "/imagenes/pico.png";
-    /**
-     * Nombre relativo del archivo en el que está la imágen de una roca
-     */
-    public static final String ARCHIVO_ROCA = "/imagenes/roca.png";
 
     /**
      * Caracter que en el mapa de caracteres de Nivel (ver
      * {@link  Nivel}) indica que en esa posición está el
      * jugador.
      */
-    public static final char CELDA_POSICION_INICIAL_JUGADOR = 'J';
+    public static final char CELDA_CABEZA_SERPIENTE = 'O';
+
+    /**
+     * Caracter que en el mapa de caracteres de Nivel (ver
+     * {@link  Nivel}) indica que en esa posición está el
+     * jugador.
+     */
+    public static final char CELDA_CUERPO_SERPIENTE = 'X';
+
     /**
      * Caracter que en el mapa de caracteres de Nivel (ver
      * {@link  Nivel}) indica que la celda está vacía.
@@ -97,41 +83,5 @@ public class Const {
      * {@link  Nivel}) indica que en esa posición está la
      * puerta.
      */
-    public static final char CELDA_PUERTA = 'P';
-    /**
-     * Caracter que en el mapa de caracteres de Nivel (ver
-     * {@link  Nivel}) indica que en esa posición hay una
-     * llave.
-     */
-    public static final char CELDA_LLAVE = 'L';
-    /**
-     * Caracter que en el mapa de caracteres de Nivel (ver
-     * {@link  Nivel}) indica que en esa posición hay un
-     * soplete.
-     */
-    public static final char CELDA_SOPLETE = 'S';
-    /**
-     * Caracter que en el mapa de caracteres de Nivel (ver
-     * {@link  Nivel}) indica que en esa posición hay un
-     * bloque de hielo.
-     */
-    public static final char CELDA_HIELO = 'H';
-    /**
-     * Caracter que en el mapa de caracteres de Nivel (ver
-     * {@link  Nivel}) indica que en esa posición hay una
-     * llama.
-     */
-    public static final char CELDA_FUEGO = 'F';
-    /**
-     * Caracter que indica presencia de pared.
-     */
-    public static final char CELDA_AGUA = 'A';
-    /**
-     * Caracter que indica presencia de pico.
-     */
-    public static final char CELDA_PICO = 'T';
-    /**
-     * Caracter que indica presencia de roca.
-     */
-    public static final char CELDA_ROCA = 'R';
+    public static final char CELDA_MANZANA = 'M';
 }

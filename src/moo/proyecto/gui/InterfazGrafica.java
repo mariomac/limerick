@@ -23,38 +23,32 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 /**
- * @author mmacias
- */
-/**
- * Esta clase implementa la interfaz gráfica de usuario que usará el programa.
- * NO TENÉIS QUE GENERAR CÓDIGO: OS VIENE DADA
- *
+ * Esta clase implementa la interfaz gráfica de usuario que usará el programa. NO TENÉIS QUE AÑADIR
+ * NI MODIFICAR CÓDIGO EN ESTA CLASE: OS VIENE DADA
  */
 public class InterfazGrafica {
 
     /**
-     * Código numérico para detectar que se ha pulsado la tecla para mover el
-     * personaje hacia arriba
+     * Código numérico para detectar que se ha pulsado la tecla para mover el personaje hacia
+     * arriba
      */
     public static final int TECLA_ARRIBA = 0;
     /**
-     * Código numérico para detectar que se ha pulsado la tecla para mover el
-     * personaje hacia abajo
+     * Código numérico para detectar que se ha pulsado la tecla para mover el personaje hacia abajo
      */
     public static final int TECLA_ABAJO = 1;
     /**
-     * Código numérico para detectar que se ha pulsado la tecla para mover el
-     * personaje hacia la izquierda
+     * Código numérico para detectar que se ha pulsado la tecla para mover el personaje hacia la
+     * izquierda
      */
     public static final int TECLA_IZQUIERDA = 2;
     /**
-     * Código numérico para detectar que se ha pulsado la tecla para mover el
-     * personaje hacia la derecha
+     * Código numérico para detectar que se ha pulsado la tecla para mover el personaje hacia la
+     * derecha
      */
     public static final int TECLA_DERECHA = 3;
     /**
-     * Código numérico para detectar que se ha pulsado la tecla R que comenzará
-     * de nuevo el nivel.
+     * Código numérico para detectar que se ha pulsado la tecla R que comenzará de nuevo el nivel.
      */
     public static final int TECLA_R = 4;
 
@@ -83,10 +77,10 @@ public class InterfazGrafica {
     private HashMap<String, ImageInfo> images = new HashMap<>();
 
     /**
-     * Constructor. Crea una interfaz gráfica con el número de filas y columnas
-     * indicadas por los argumento
+     * Constructor. Crea una interfaz gráfica con el número de filas y columnas indicadas por los
+     * argumento
      *
-     * @param filas el número de filas
+     * @param filas    el número de filas
      * @param columnas el número de columnas
      */
     public InterfazGrafica(int filas, int columnas) {
@@ -104,8 +98,8 @@ public class InterfazGrafica {
     }
 
     /**
-     * Devuelve un código numérico en función de la tecla que el usuario
-     * haya pulsado.
+     * Devuelve un código numérico en función de la tecla que el usuario haya pulsado.
+     *
      * @return el código de la tecla pulsada.
      */
     public int leeTeclaPulsada() {
@@ -120,11 +114,12 @@ public class InterfazGrafica {
     }
 
     /**
-     * Coloca una cierta imagen en una posición de la matriz del recinto.
-     * La imagen está depositada en un archivo cuyo nombre se pasa como argumento.
+     * Coloca una cierta imagen en una posición de la matriz del recinto. La imagen está depositada
+     * en un archivo cuyo nombre se pasa como argumento.
+     *
      * @param archivo nombre del archivo que contiene la imagen
-     * @param fila el número de fila de la celda en la que la imagen debe colocarse
-     * @param col el número de columna de la celda en la que la imagen debe colocarse
+     * @param fila    el número de fila de la celda en la que la imagen debe colocarse
+     * @param col     el número de columna de la celda en la que la imagen debe colocarse
      */
     public void colocaImagen(String archivo, int fila, int col) {
         if (fila >= 0 && fila < GUIApplication.filas && col >= 0 && col < GUIApplication.columnas) {
@@ -137,9 +132,9 @@ public class InterfazGrafica {
     }
 
     /**
-     * Consigue la imagen almacenada en el archivo cuyo nombre se pasa como argumento
-     * y añade una nueva entrada en el mapa que contiene objetos con información de
-     * imágenes
+     * Consigue la imagen almacenada en el archivo cuyo nombre se pasa como argumento y añade una
+     * nueva entrada en el mapa que contiene objetos con información de imágenes
+     *
      * @param path el nombre del archivo
      * @return el objeto ImageInfo con información de la imagen
      */
@@ -208,8 +203,8 @@ public class InterfazGrafica {
         Stage primaryStage;
 
         /**
-         * Cola que contiene los códigos numéricos correspondientes a las teclas
-         * pulsadas por el usuario
+         * Cola que contiene los códigos numéricos correspondientes a las teclas pulsadas por el
+         * usuario
          */
         final static Queue<Integer> entradaCursor = new ConcurrentLinkedQueue<>();
 
@@ -225,8 +220,8 @@ public class InterfazGrafica {
 
         /**
          * Inicia la interfaz gráfica de usuario.
-         * @throws Exception lanza un objeto Exception si se produce alguna
-         * situación anómala.
+         *
+         * @throws Exception lanza un objeto Exception si se produce alguna situación anómala.
          */
         @Override
         public void init() throws Exception {
@@ -234,12 +229,12 @@ public class InterfazGrafica {
         }
 
         /**
-         * Da comienzo a la construcción y presentación del interfaz gráfico de usuario.
-         * Lee pulsaciones de teclas desde el teclado y las procesa, ordenando el dibujado
-         * o borrado de diferentes imágenes en el GUI.
+         * Da comienzo a la construcción y presentación del interfaz gráfico de usuario. Lee
+         * pulsaciones de teclas desde el teclado y las procesa, ordenando el dibujado o borrado de
+         * diferentes imágenes en el GUI.
+         *
          * @param primaryStage el contenedor del GUI
-         * @throws Exception lanza una excepción si se produce alguna situación
-         * anómala.
+         * @throws Exception lanza una excepción si se produce alguna situación anómala.
          */
         @Override
         public void start(Stage primaryStage) throws Exception {
@@ -333,8 +328,7 @@ public class InterfazGrafica {
         }
 
         /**
-         * Clase privada que permite crear un timer para actualizar las tramas
-         * del GUI.
+         * Clase privada que permite crear un timer para actualizar las tramas del GUI.
          */
         private class Updater extends AnimationTimer {
 
@@ -354,12 +348,14 @@ public class InterfazGrafica {
                 gc.fillRect(0, 0, sceneWidth, sceneHeight);
 
                 for (int col = 0; col < columnas; col++) {
-                    for (int row = 0; row < filas ; row++) {
+                    for (int row = 0; row < filas; row++) {
                         ImageInfo ii = pieces[col][row];
                         if (ii != null) {
                             int animationIndex = (int) ((l / ANIMATION_SPEED_NS) % ii.frames);
-                            gc.drawImage(ii.image, animationIndex * ii.frameSize, 0, ii.frameSize, ii.frameSize,
-                                    col * TILE_SIZE, row * TILE_SIZE, ii.frameSize, ii.frameSize);
+                            gc.drawImage(ii.image, animationIndex * ii.frameSize, 0, ii.frameSize,
+                                         ii.frameSize,
+                                         col * TILE_SIZE, row * TILE_SIZE, ii.frameSize,
+                                         ii.frameSize);
 
                         }
                     }
