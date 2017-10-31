@@ -1,4 +1,4 @@
-package moo.proyecto.entrega2;
+package moo.proyecto.entrega1;
 
 /**
  * Interfaz que representa cada uno de los poderes que un Item puede tener.

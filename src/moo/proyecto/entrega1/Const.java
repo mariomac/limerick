@@ -1,4 +1,4 @@
-package moo.proyecto.entrega2;
+package moo.proyecto.entrega1;
 
 /**
  *
@@ -27,16 +27,16 @@ public class Const {
     /**
      * Número de columnas del recinto
      */
-    public static final int NIVEL_COLUMNAS = 16;
+    public static final int NIVEL_COLUMNAS = 19;
     /**
      * Número de filas del recinto
      */
-    public static final int NIVEL_FILAS = 14;
+    public static final int NIVEL_FILAS = 15;
 
     /**
      * Nombre relativo del archivo en el que está la imagen de la cara de la serpiente
      */
-    public static final String ARCHIVO_CARA = "/imagenes/cara.png";
+    public static final String ARCHIVO_CABEZA = "/imagenes/cabeza.png";
 
     /**
      * Nombre relativo del archivo en el que está la imagen de la cara de la serpiente
@@ -44,9 +44,14 @@ public class Const {
     public static final String ARCHIVO_CUERPO = "/imagenes/cuerpo.png";
 
     /**
-     * Nombre relativo del archivo en el que está la imagen de la caja de la serpiente
+     * Nombre relativo del archivo en el que está la imagen de la caja
      */
     public static final String ARCHIVO_CAJA = "/imagenes/caja.png";
+
+    /**
+     * Nombre relativo del archivo en el que está la imagen de la manzana
+     */
+    public static final String ARCHIVO_MANZANA = "/imagenes/manzana.png";
 
     /**
      * Nombre relativo del archivo en el que está la imagen de la pared
@@ -55,23 +60,21 @@ public class Const {
 
     /**
      * Caracter que en el mapa de caracteres de Nivel (ver
-     * {@link  Nivel}) indica que en esa posición está el
-     * jugador.
+     * {@link  Nivel}) indica que en esa posición está la cabeza de la serpiente.
      */
-    public static final char CELDA_CABEZA_SERPIENTE = 'O';
+    public static final char CELDA_CABEZA = 'O';
 
     /**
      * Caracter que en el mapa de caracteres de Nivel (ver
-     * {@link  Nivel}) indica que en esa posición está el
-     * jugador.
+     * {@link  Nivel}) indica que en esa posición está el cuerpo de la serpiente.
      */
-    public static final char CELDA_CUERPO_SERPIENTE = 'X';
+    public static final char CELDA_CUERPO = 'X';
 
     /**
      * Caracter que en el mapa de caracteres de Nivel (ver
      * {@link  Nivel}) indica que la celda está vacía.
      */
-    public static final char CELDA_NORMAL = ' ';
+    public static final char CELDA_VACIA = ' ';
     /**
      * Caracter que en el mapa de caracteres de Nivel (ver
      * {@link  Nivel}) indica que en esa posición hay una
@@ -84,4 +87,11 @@ public class Const {
      * puerta.
      */
     public static final char CELDA_MANZANA = 'M';
+
+    /**
+     * Caracter que en el mapa de caracteres de Nivel (ver
+     * {@link  Nivel}) indica que en esa posición hay una caja.
+     */
+    public static final char CELDA_CAJA = 'K';
+
 }

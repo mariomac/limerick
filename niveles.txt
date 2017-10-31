@@ -1,7 +1,7 @@
 // ESTO ES UN FICHERO QUE GUARDA LOS MAPAS DE LAS PANTALLAS. SU FORMATO ES EL SIGUIENTE:
 //
 //     - Una línea que empieza con los caracteres '//' es una línea a ignorar
-//     - Cada línea de texto representa una fila en el mapa del juego, con los caracteres pertenecientes al tipo
+//     - Cada línea de texto representa una fila en el mapaInicial del juego, con los caracteres pertenecientes al tipo
 //       de objeto en escena ahí situado.
 //     - Las líneas tendrán una longitud dada por la constante Const.NIVEL_COLUMNAS. Todo lo que se añada a partir de
 //       esa columna será ignorado
