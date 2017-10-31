@@ -1,23 +1,26 @@
 package moo.proyecto.gui;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Semaphore;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import moo.proyecto.entrega2.Const;
+import javafx.stage.WindowEvent;
 
 /**
  * @author mmacias
@@ -75,17 +78,6 @@ public class InterfazGrafica {
     private static int sceneHeight;
 
     /**
-     * Cola que contiene los códigos numéricos correspondientes a las teclas 
-     * pulsadas por el usuario
-     */
-    private static Queue<Integer> entradaCursor = new LinkedList<>();
-
-    /**
-     * Matriz de imágenes para presentar el recinto de juego
-     */
-    private static ImageInfo[][] pieces = new ImageInfo[Const.NIVEL_COLUMNAS][Const.NIVEL_FILAS];
-
-    /**
      * Mapa que mapea el nombre de un archivo con la imagen correspondiente.
      */
     private HashMap<String, ImageInfo> images = new HashMap<>();
@@ -98,52 +90,55 @@ public class InterfazGrafica {
      * @param columnas el número de columnas
      */
     public InterfazGrafica(int filas, int columnas) {
+        GUIApplication.filas = filas;
+        GUIApplication.columnas = columnas;
+        GUIApplication.pieces = new ImageInfo[columnas][filas];
         sceneWidth = columnas * TILE_SIZE;
         sceneHeight = filas * TILE_SIZE;
-        new Thread(
-                () -> mostrar()
-        ).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mostrar();
+            }
+        }).start();
     }
 
     /**
-     * Devuelve un código numérico en función de la tecla que el usuario 
+     * Devuelve un código numérico en función de la tecla que el usuario
      * haya pulsado.
      * @return el código de la tecla pulsada.
      */
     public int leeTeclaPulsada() {
-        while (entradaCursor.isEmpty()) {
+        while (GUIApplication.entradaCursor.isEmpty()) {
             try {
-                synchronized (entradaCursor) {
-                    entradaCursor.wait();
-                }
+                GUIApplication.esperaTeclas.acquire();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        return entradaCursor.poll();
+        return GUIApplication.entradaCursor.poll();
     }
 
     /**
-     * Coloca una cierta imagen en una posición de la matriz del recinto. 
+     * Coloca una cierta imagen en una posición de la matriz del recinto.
      * La imagen está depositada en un archivo cuyo nombre se pasa como argumento.
      * @param archivo nombre del archivo que contiene la imagen
      * @param fila el número de fila de la celda en la que la imagen debe colocarse
      * @param col el número de columna de la celda en la que la imagen debe colocarse
      */
     public void colocaImagen(String archivo, int fila, int col) {
-        if (fila >= 0 && fila < Const.NIVEL_FILAS && col >= 0 && col < Const.NIVEL_COLUMNAS) {
+        if (fila >= 0 && fila < GUIApplication.filas && col >= 0 && col < GUIApplication.columnas) {
             if (archivo == null) {
-                pieces[col][fila] = null;
-
+                GUIApplication.pieces[col][fila] = null;
             } else {
-                pieces[col][fila] = get(archivo);
+                GUIApplication.pieces[col][fila] = get(archivo);
             }
         }
     }
 
     /**
-     * Consigue la imagen almacenada en el archivo cuyo nombre se pasa como argumento 
-     * y añade una nueva entrada en el mapa que contiene objetos con información de 
+     * Consigue la imagen almacenada en el archivo cuyo nombre se pasa como argumento
+     * y añade una nueva entrada en el mapa que contiene objetos con información de
      * imágenes
      * @param path el nombre del archivo
      * @return el objeto ImageInfo con información de la imagen
@@ -186,6 +181,16 @@ public class InterfazGrafica {
     public static class GUIApplication extends Application {
 
         /**
+         * Número de filas de la escena
+         */
+        static int filas;
+
+        /**
+         * Número de columnas de la escena
+         */
+        static int columnas;
+
+        /**
          * La escena del juego
          */
         Scene gameScene;
@@ -203,8 +208,24 @@ public class InterfazGrafica {
         Stage primaryStage;
 
         /**
+         * Cola que contiene los códigos numéricos correspondientes a las teclas
+         * pulsadas por el usuario
+         */
+        final static Queue<Integer> entradaCursor = new ConcurrentLinkedQueue<>();
+
+        /**
+         * "Latch" para sincronizar la lectura de teclas
+         */
+        final static Semaphore esperaTeclas = new Semaphore(0);
+
+        /**
+         * Matriz de imágenes para presentar el recinto de juego
+         */
+        static ImageInfo[][] pieces;
+
+        /**
          * Inicia la interfaz gráfica de usuario.
-         * @throws Exception lanza un objeto Exception si se produce alguna 
+         * @throws Exception lanza un objeto Exception si se produce alguna
          * situación anómala.
          */
         @Override
@@ -214,27 +235,32 @@ public class InterfazGrafica {
 
         /**
          * Da comienzo a la construcción y presentación del interfaz gráfico de usuario.
-         * Lee pulsaciones de teclas desde el teclado y las procesa, ordenando el dibujado 
+         * Lee pulsaciones de teclas desde el teclado y las procesa, ordenando el dibujado
          * o borrado de diferentes imágenes en el GUI.
          * @param primaryStage el contenedor del GUI
-         * @throws Exception lanza una excepción si se produce alguna situación 
+         * @throws Exception lanza una excepción si se produce alguna situación
          * anómala.
          */
         @Override
         public void start(Stage primaryStage) throws Exception {
             this.primaryStage = primaryStage;
-            this.primaryStage.setOnCloseRequest(event -> System.exit(0));
-            primaryStage.setTitle("¡Escapada!");
+            this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    System.exit(0);
+                }
+            });
+            primaryStage.setTitle("¡Snake escape!");
             Group root = new Group();
             sceneCanvas = new Canvas(sceneWidth, sceneHeight);
 
             root.getChildren().add(sceneCanvas);
             gameScene = new Scene(root, sceneWidth, sceneHeight, false, SceneAntialiasing.DISABLED);
 
-            gameScene.setOnKeyPressed(event -> {
-                synchronized (entradaCursor) {
+            gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent event) {
                     boolean wasEmpty = entradaCursor.isEmpty();
-
                     switch (event.getCode()) {
                         case R:
                             entradaCursor.add(TECLA_R);
@@ -258,7 +284,7 @@ public class InterfazGrafica {
                     }
 
                     if (wasEmpty && !entradaCursor.isEmpty()) {
-                        entradaCursor.notify();
+                        esperaTeclas.release();
                     }
                 }
             });
@@ -303,15 +329,11 @@ public class InterfazGrafica {
             @Override
             public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
                 resizeCanvas();
-
-//                sceneCanvas.setScaleY(primaryStage.getHeight()/sceneHeight);
-//                sceneCanvas.setWidth(primaryStage.getWidth());
-//                sceneCanvas.setHeight(primaryStage.getHeight());
             }
         }
 
         /**
-         * Clase privada que permite crear un timer para actualizar las tramas 
+         * Clase privada que permite crear un timer para actualizar las tramas
          * del GUI.
          */
         private class Updater extends AnimationTimer {
@@ -331,8 +353,8 @@ public class InterfazGrafica {
                 gc.setFill(Color.BLACK);
                 gc.fillRect(0, 0, sceneWidth, sceneHeight);
 
-                for (int col = 0; col < Const.NIVEL_COLUMNAS; col++) {
-                    for (int row = 0; row < Const.NIVEL_FILAS; row++) {
+                for (int col = 0; col < columnas; col++) {
+                    for (int row = 0; row < filas ; row++) {
                         ImageInfo ii = pieces[col][row];
                         if (ii != null) {
                             int animationIndex = (int) ((l / ANIMATION_SPEED_NS) % ii.frames);
@@ -349,20 +371,10 @@ public class InterfazGrafica {
 
     private boolean isLaunched = false;
 
-    void mostrar() {
+    private void mostrar() {
         if (!isLaunched) {
             isLaunched = true;
-            //GUIApplication.launch(new String[0]);
-            Application.launch(GUIApplication.class, new String[0]);
+            Application.launch(GUIApplication.class);
         }
     }
-
-    public void mensaje(String texto) {
-        System.out.println(texto);
-    }
-
-    public void error(String texto) {
-        System.err.println(texto);
-    }
-
 }
