@@ -6,10 +6,6 @@ import java.util.List;
 import moo.proyecto.gui.InterfazGrafica;
 
 /**
- * @author mmacias
- */
-
-/**
  * Clase que implementa el control del juego.
  *
  */
