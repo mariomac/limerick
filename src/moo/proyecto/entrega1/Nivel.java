@@ -67,7 +67,7 @@ public class Nivel {
                 if (mapaInicial[f][c] == Const.CELDA_CABEZA) {
                     cabeza = new Cabeza(f, c);
                 }
-                celdas[f][c] = new Celda(f, c, mapaInicial[f][c]);
+                celdas[f][c] = new Celda(mapaInicial[f][c]);
             }
         }
     }
@@ -92,19 +92,48 @@ public class Nivel {
         return celdas[fila][col];
     }
 
-    /**
-     * Intenta mover al cabeza a la celda cuya posición se indica en sus argumentos.
-     * @param fila número de fila de la celda a la que desea moverse el cabeza.
-     * @param col número de columna de la celda a la que desea moverse el cabeza.
-     * @return true si el cabeza ha llegado a la puerta de fin de nivel. False en caso contrario
-     */
     public boolean intentaMoverCabeza(int fila, int col) {
-        if (celdas[fila][col].puedePasar(cabeza, celdas)) {
-            cabeza.setPosicion(fila, col);
-            return celdas[fila][col].pasa(cabeza, celdas);
+        Celda izq = null, der = null;
+        if (col > 1) {
+            izq = celdas[fila][col - 1];
+        }
+        if (col < celdas[0].length - 1) {
+            der = celdas[fila][col + 1];
+        }
+        if (celdas[fila][col].puedePasar(cabeza, der, izq)) {
+            return pasa(fila, col);
         } else {
             return false;
         }
+    }
+
+    public boolean pasa(int fila, int columna) {
+        switch (celdas[fila][columna].getTipo()) {
+            case Const.CELDA_MANZANA:
+                return true;
+            case Const.CELDA_CAJA:
+                if (cabeza.getColumna() < columna) {
+                    celdas[fila][columna + 1].setTipo(Const.CELDA_CAJA);
+                } else if (cabeza.getColumna() > columna) {
+                    celdas[fila][columna - 1].setTipo(Const.CELDA_CAJA);
+                }
+        }
+        return mueveCabeza(fila, columna);
+    }
+
+    public boolean mueveCabeza(int fila, int columna) {
+        do {
+            celdas[cabeza.getFila()][cabeza.getColumna()].setTipo(Const.CELDA_CUERPO);
+            cabeza.setPosicion(fila, columna);
+            celdas[fila][columna].setTipo(Const.CELDA_CABEZA);
+            fila++;
+        } while(celdas[fila][columna].getTipo() == Const.CELDA_VACIA);
+
+        // Si cae encima de una manzana, se acaba la fase
+        if (celdas[fila][columna].getTipo() == Const.CELDA_MANZANA) {
+            return true;
+        }
+        return false;
     }
 
     /**
