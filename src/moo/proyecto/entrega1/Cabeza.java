@@ -1,14 +1,5 @@
 package moo.proyecto.entrega1;
 
-/**
- *
- * @author mmacias
- */
-
-/**
- * Clase para gestionar al personaje que se moverá por el tablero.
- *
- */
 public class Cabeza {
 
     private int fila;

@@ -67,7 +67,7 @@ public class Nivel {
                 if (mapaInicial[f][c] == Const.CELDA_CABEZA) {
                     cabeza = new Cabeza(f, c);
                 }
-                celdas[f][c] = new Celda(f, c, mapaInicial[f][c]);
+                celdas[f][c] = new Celda(f, c, mapaInicial[f][c], this);
             }
         }
     }
@@ -100,14 +100,7 @@ public class Nivel {
                 cabeza.incrementaSubidas();
             }
         }
-        Celda izq = null, der = null;
-        if (col > 1) {
-            izq = celdas[fila][col - 1];
-        }
-        if (col < columnas - 1) {
-            der = celdas[fila][col + 1];
-        }
-        if (celdas[fila][col].puedePasar(cabeza, izq, der)) {
+        if (celdas[fila][col].puedePasar(cabeza)) {
             if(fila == cabeza.getFila()) {
                 cabeza.resetSubidas();
             }

@@ -4,6 +4,7 @@ package moo.proyecto.entrega1;
  * Clase para gestionar objetos Celda, que conformarán el recinto de juego.
  */
 public class Celda {
+
     /**
      * Fila en la que se encuentra la celda
      */
@@ -20,17 +21,16 @@ public class Celda {
      */
     private char tipo;
 
-    public void vaciar() {
-        this.tipo = Const.CELDA_VACIA;
-    }
+    private Nivel nivel;
 
-    public Celda(int fila, int columna, char tipo) {
+    public Celda(int fila, int columna, char tipo, Nivel nivel) {
         this.fila = fila;
         this.columna = columna;
         this.tipo = tipo;
+        this.nivel = nivel;
     }
 
-    public boolean puedePasar(Cabeza cabeza, Celda celdaIzq, Celda celdaDer) {
+    public boolean puedePasar(Cabeza cabeza) {
         switch (tipo) {
             case Const.CELDA_VACIA:
             case Const.CELDA_MANZANA:
@@ -41,14 +41,10 @@ public class Celda {
             case Const.CELDA_CAJA:
                 // Si la serpiente viene por la izquierda, puede pasar solo si a la derecha no hay nada
                 // Si la serpiente viene por la derecha, puede pasar solo si a la izquierda no hay nada
-                System.out.println("celdaIzq = " + celdaIzq.getTipo());
-                System.out.println("celdaDer = " + celdaDer.getTipo());
-                System.out.println("cabeza.getColumna() = " + cabeza.getColumna());
-                System.out.println("columna = " + columna);
                 return (cabeza.getColumna() < columna
-                        && celdaDer != null && celdaDer.tipo == Const.CELDA_VACIA)
+                        && nivel.getCelda(fila, columna + 1).tipo == Const.CELDA_VACIA)
                         || (cabeza.getColumna() > columna
-                        && celdaIzq != null && celdaIzq.tipo == Const.CELDA_VACIA);
+                        && nivel.getCelda(fila, columna - 1).tipo == Const.CELDA_VACIA);
             default:
                 return false;
         }
