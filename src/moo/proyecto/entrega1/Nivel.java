@@ -99,8 +99,6 @@ public class Nivel {
             } else {
                 cabeza.incrementaSubidas();
             }
-        } else {
-            cabeza.resetSubidas();
         }
         Celda izq = null, der = null;
         if (col > 1) {
@@ -110,6 +108,9 @@ public class Nivel {
             der = celdas[fila][col + 1];
         }
         if (celdas[fila][col].puedePasar(cabeza, izq, der)) {
+            if(fila == cabeza.getFila()) {
+                cabeza.resetSubidas();
+            }
             return pasa(fila, col);
         } else {
             return false;

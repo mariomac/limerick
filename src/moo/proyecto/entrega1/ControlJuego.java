@@ -28,7 +28,7 @@ public class ControlJuego {
      * Identificador de nivel. Valor inicial: 0. Conforme se sube de nivel se
      * incrementa su valor hasta un valor máximo.
      */
-    private int nivel = 8;
+    private int nivel = 0;
 
     /**
      * Permite jugar la partida.
