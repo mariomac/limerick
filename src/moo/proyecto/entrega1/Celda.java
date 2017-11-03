@@ -24,12 +24,13 @@ public class Celda {
         this.tipo = Const.CELDA_VACIA;
     }
 
-    public Celda(char tipo) {
-
+    public Celda(int fila, int columna, char tipo) {
+        this.fila = fila;
+        this.columna = columna;
         this.tipo = tipo;
     }
 
-    public boolean puedePasar(Cabeza j, Celda celdaIzq, Celda celdaDer) {
+    public boolean puedePasar(Cabeza cabeza, Celda celdaIzq, Celda celdaDer) {
         switch (tipo) {
             case Const.CELDA_VACIA:
             case Const.CELDA_MANZANA:
@@ -40,9 +41,13 @@ public class Celda {
             case Const.CELDA_CAJA:
                 // Si la serpiente viene por la izquierda, puede pasar solo si a la derecha no hay nada
                 // Si la serpiente viene por la derecha, puede pasar solo si a la izquierda no hay nada
-                return (j.getColumna() < columna
+                System.out.println("celdaIzq = " + celdaIzq.getTipo());
+                System.out.println("celdaDer = " + celdaDer.getTipo());
+                System.out.println("cabeza.getColumna() = " + cabeza.getColumna());
+                System.out.println("columna = " + columna);
+                return (cabeza.getColumna() < columna
                         && celdaDer != null && celdaDer.tipo == Const.CELDA_VACIA)
-                        || (j.getColumna() > columna
+                        || (cabeza.getColumna() > columna
                         && celdaIzq != null && celdaIzq.tipo == Const.CELDA_VACIA);
             default:
                 return false;

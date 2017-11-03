@@ -67,7 +67,7 @@ public class Nivel {
                 if (mapaInicial[f][c] == Const.CELDA_CABEZA) {
                     cabeza = new Cabeza(f, c);
                 }
-                celdas[f][c] = new Celda(mapaInicial[f][c]);
+                celdas[f][c] = new Celda(f, c, mapaInicial[f][c]);
             }
         }
     }
@@ -93,14 +93,23 @@ public class Nivel {
     }
 
     public boolean intentaMoverCabeza(int fila, int col) {
+        if (fila < cabeza.getFila()) {
+            if (!cabeza.puedeSubir()) {
+                return false;
+            } else {
+                cabeza.incrementaSubidas();
+            }
+        } else {
+            cabeza.resetSubidas();
+        }
         Celda izq = null, der = null;
         if (col > 1) {
             izq = celdas[fila][col - 1];
         }
-        if (col < celdas[0].length - 1) {
+        if (col < columnas - 1) {
             der = celdas[fila][col + 1];
         }
-        if (celdas[fila][col].puedePasar(cabeza, der, izq)) {
+        if (celdas[fila][col].puedePasar(cabeza, izq, der)) {
             return pasa(fila, col);
         } else {
             return false;
@@ -113,9 +122,9 @@ public class Nivel {
                 return true;
             case Const.CELDA_CAJA:
                 if (cabeza.getColumna() < columna) {
-                    celdas[fila][columna + 1].setTipo(Const.CELDA_CAJA);
+                    mueveCaja(fila, columna + 1);
                 } else if (cabeza.getColumna() > columna) {
-                    celdas[fila][columna - 1].setTipo(Const.CELDA_CAJA);
+                    mueveCaja(fila, columna - 1);
                 }
         }
         return mueveCabeza(fila, columna);
@@ -134,6 +143,13 @@ public class Nivel {
             return true;
         }
         return false;
+    }
+
+    public void mueveCaja(int fila, int columna) {
+        while(celdas[fila + 1][columna].getTipo() == Const.CELDA_VACIA) {
+            fila++;
+        }
+        celdas[fila][columna].setTipo(Const.CELDA_CAJA);
     }
 
     /**

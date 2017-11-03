@@ -24,6 +24,7 @@ package moo.proyecto.entrega1;
  */
 public class Const {
 
+    public static final int MAX_SUBIDA = 3;
     /**
      * Número de columnas del recinto
      */
