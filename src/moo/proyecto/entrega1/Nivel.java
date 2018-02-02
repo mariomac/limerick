@@ -3,16 +3,15 @@ package moo.proyecto.entrega1;
 /**
  * Cada objeto de la clase Nivel contiene toda la información correspondiente a
  * uno de los niveles del juego. Cada nivel está formado por el tablero y el
- * cabeza. En las celdas del tablero se distribuyen los objetos y los items,
- * así como el cabeza.
- *
+ * controlCabeza. En las celdas del tablero se distribuyen los objetos y los items,
+ * así como el controlCabeza.
  */
 public class Nivel {
 
     /**
-     * Cabeza en el tablero
+     * ControlCabeza en el tablero
      */
-    private Cabeza cabeza;
+    private ControlCabeza controlCabeza;
     /**
      * Vector bidimensional de celdas. Cada posición se corresponde con una
      * celda del tablero de juego.
@@ -49,42 +48,51 @@ public class Nivel {
      * celda hay que depositar el item/obstáculo indicado por el carácter presente en la
      * misma posición del mapaInicial de caracteres (si hay un carácter distinto del espacio
      * en blanco, que indica ausencia de obstáculos/items).
-     * @param filas número de filas del recinto
-     * @param columnas numero de columnas del recinto
+     *
+     * @param filas       número de filas del recinto
+     * @param columnas    numero de columnas del recinto
      * @param mapaInicial matriz de caracteres (con dimensiones iguales a las indicadas
-     * por los dos anteriores parámentros) cuyos contenidos indican los objetos
-     * (items/obstáculos) que deben aparecer en la posición correspondiente del
-     * recinto.
+     *                    por los dos anteriores parámentros) cuyos contenidos indican los objetos
+     *                    (items/obstáculos) que deben aparecer en la posición correspondiente del
+     *                    recinto.
      */
     public Nivel(int filas, int columnas, char[][] mapaInicial) {
         this.mapaInicial = mapaInicial;
         this.filas = filas;
         this.columnas = columnas;
         celdas = new Celda[filas][columnas];
+    }
+
+    public void inicializar() {
         for (int f = 0; f < filas; f++) {
             for (int c = 0; c < columnas; c++) {
-
+                ContenidoCelda contenido = null;
                 if (mapaInicial[f][c] == Const.CELDA_CABEZA) {
-                    cabeza = new Cabeza(f, c);
+                    controlCabeza = new ControlCabeza(this, f, c);
+                    contenido = new ContenidoCelda(mapaInicial[f][c], this, controlCabeza);
+                } else if(mapaInicial[f][c] != Const.CELDA_VACIA) {
+                    contenido = new ContenidoCelda(mapaInicial[f][c], this);
                 }
-                celdas[f][c] = new Celda(f, c, mapaInicial[f][c], this);
+                celdas[f][c] = new Celda(f, c, contenido);
             }
         }
     }
 
     /**
-     * Devuelve una referencia al cabeza
-     * @return referencia al cabeza
+     * Devuelve una referencia al controlCabeza
+     *
+     * @return referencia al controlCabeza
      */
-    public Cabeza getCabeza() {
-        return cabeza;
+    public ControlCabeza getControlCabeza() {
+        return controlCabeza;
     }
 
     /**
      * Devuelve una referencia a la celda que ocupa una cierta posición en
      * el recinto de juego, indicada por el número de fila y el número de columna.
+     *
      * @param fila número de fila de la celda
-     * @param col número de columna de la celda
+     * @param col  número de columna de la celda
      * @return referencia a celda que ouupa la posición indicada por los dos
      * argumentos anteriores.
      */
@@ -92,69 +100,18 @@ public class Nivel {
         return celdas[fila][col];
     }
 
-    public boolean intentaMoverCabeza(int fila, int col) {
-        if (fila < cabeza.getFila()) {
-            if (!cabeza.puedeSubir()) {
-                return false;
-            } else {
-                cabeza.incrementaSubidas();
-            }
+    public int mueveCabeza(int df, int dc) {
+        if (df < 0 && controlCabeza.isLimiteSubidas()) {
+            return Const.PASO_IMPOSIBLE;
         }
-        if (celdas[fila][col].puedePasar(cabeza)) {
-            if(fila == cabeza.getFila()) {
-                cabeza.resetSubidas();
-            }
-            return pasa(fila, col);
-        } else {
-            return false;
+
+        int fila = controlCabeza.getFila() + df;
+        int columna = controlCabeza.getColumna() + dc;
+        int paso = celdas[fila][columna].pasa(df, dc);
+        if (paso != Const.PASO_IMPOSIBLE) {
+            controlCabeza.actualizaPosicion(df, dc);
         }
-    }
-
-    public boolean pasa(int fila, int columna) {
-        switch (celdas[fila][columna].getTipo()) {
-            case Const.CELDA_MANZANA:
-                return true;
-            case Const.CELDA_CAJA:
-                if (cabeza.getColumna() < columna) {
-                    mueveCaja(fila, columna + 1);
-                } else if (cabeza.getColumna() > columna) {
-                    mueveCaja(fila, columna - 1);
-                }
-        }
-        return mueveCabeza(fila, columna);
-    }
-
-    public boolean mueveCabeza(int fila, int columna) {
-        do {
-            celdas[cabeza.getFila()][cabeza.getColumna()].setTipo(Const.CELDA_CUERPO);
-            cabeza.setPosicion(fila, columna);
-            celdas[fila][columna].setTipo(Const.CELDA_CABEZA);
-            fila++;
-        } while(celdas[fila][columna].getTipo() == Const.CELDA_VACIA);
-
-        // Si cae encima de una manzana, se acaba la fase
-        if (celdas[fila][columna].getTipo() == Const.CELDA_MANZANA) {
-            return true;
-        }
-        return false;
-    }
-
-    public void mueveCaja(int fila, int columna) {
-        while(celdas[fila + 1][columna].getTipo() == Const.CELDA_VACIA) {
-            fila++;
-        }
-        celdas[fila][columna].setTipo(Const.CELDA_CAJA);
-    }
-
-    /**
-     * Crea un nuevo objeto Nivel con el mismo número de filas, el mismo número
-     * de columnas y el mismo mapaInicial de caracteres.
-     *
-     * @return el nuevo nivel creado con los mismos contenidos que los de este
-     * nivel.
-     */
-    public Nivel clonar() {
-        return new Nivel(filas, columnas, mapaInicial);
+        return paso;
     }
 
 }

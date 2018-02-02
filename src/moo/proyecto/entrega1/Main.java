@@ -15,7 +15,7 @@ public class Main {
         ControlJuego cj = new ControlJuego();
 
         cj.cargaNiveles();
-        cj.empiezaPartida();
+        cj.partida();
 
         System.exit(0);
     }

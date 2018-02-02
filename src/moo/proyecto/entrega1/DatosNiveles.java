@@ -4,8 +4,6 @@
 
 package moo.proyecto.entrega1;
 
-import java.util.List;
-
 public class DatosNiveles {
 
     /**

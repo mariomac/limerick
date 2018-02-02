@@ -117,7 +117,8 @@ public class InterfazGrafica {
      * Coloca una cierta imagen en una posición de la matriz del recinto. La imagen está depositada
      * en un archivo cuyo nombre se pasa como argumento.
      *
-     * @param archivo nombre del archivo que contiene la imagen
+     * @param archivo nombre del archivo que contiene la imagen. Si es una referencia a null,
+     *                no se dibujará nada o se borrará la imagen que ya haya en ese recuadro.
      * @param fila    el número de fila de la celda en la que la imagen debe colocarse
      * @param col     el número de columna de la celda en la que la imagen debe colocarse
      */

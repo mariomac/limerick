@@ -14,69 +14,39 @@ public class Celda {
      */
     private int columna;
 
-    /**
-     * Tipo de celda, cuyos valores podran ser {@link Const#CELDA_CABEZA},
-     * {@link Const#CELDA_CUERPO}, {@link Const#CELDA_MANZANA},
-     * {@link Const#CELDA_VACIA}, {@link Const#CELDA_PARED}, {@link Const#CELDA_CAJA}
-     */
-    private char tipo;
+    private ContenidoCelda contenido; // si null, es que está vacía
 
-    private Nivel nivel;
-
-    public Celda(int fila, int columna, char tipo, Nivel nivel) {
+    public Celda(int fila, int columna, ContenidoCelda contenido) {
+        this.contenido = contenido;
         this.fila = fila;
         this.columna = columna;
-        this.tipo = tipo;
-        this.nivel = nivel;
     }
 
-    public boolean puedePasar(Cabeza cabeza) {
-        switch (tipo) {
-            case Const.CELDA_VACIA:
-            case Const.CELDA_MANZANA:
-                return true;
-            case Const.CELDA_PARED:
-            case Const.CELDA_CUERPO:
-                return false;
-            case Const.CELDA_CAJA:
-                // Si la serpiente viene por la izquierda, puede pasar solo si a la derecha no hay nada
-                // Si la serpiente viene por la derecha, puede pasar solo si a la izquierda no hay nada
-                return (cabeza.getColumna() < columna
-                        && nivel.getCelda(fila, columna + 1).tipo == Const.CELDA_VACIA)
-                        || (cabeza.getColumna() > columna
-                        && nivel.getCelda(fila, columna - 1).tipo == Const.CELDA_VACIA);
-            default:
-                return false;
+    public int pasa(int df, int dc) {
+        if(contenido == null) {
+            return Const.PASO_OK;
         }
-    }
-
-    /**
-     * Retorna el archivo de imagen del objeto situado en la celda o "null" si no hay ningún objeto.
-     *
-     * @return el archivo de imagen del objeto situado en la celda o "null" si no hay ningún objeto.
-     */
-    public String getArchivoImagen() {
-        switch (tipo) {
-            case Const.CELDA_PARED:
-                return Const.ARCHIVO_PARED;
-            case Const.CELDA_CABEZA:
-                return Const.ARCHIVO_CABEZA;
-            case Const.CELDA_CAJA:
-                return Const.ARCHIVO_CAJA;
-            case Const.CELDA_CUERPO:
-                return Const.ARCHIVO_CUERPO;
-            case Const.CELDA_MANZANA:
-                return Const.ARCHIVO_MANZANA;
-            default:
-                return null;
+        if(contenido.esCogible()) {
+            return contenido.coger();
         }
+        if(contenido.esEmpujable()) {
+            return contenido.empujar(fila + df, columna + dc);
+        }
+        return Const.PASO_IMPOSIBLE;
     }
 
-    public char getTipo() {
-        return tipo;
+    public String getImagen() {
+        if(contenido == null) {
+            return null;
+        }
+        return contenido.getImagen();
     }
 
-    public void setTipo(char tipo) {
-        this.tipo = tipo;
+    public ContenidoCelda getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(ContenidoCelda contenido) {
+        this.contenido = contenido;
     }
 }

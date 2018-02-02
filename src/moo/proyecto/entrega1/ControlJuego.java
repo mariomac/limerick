@@ -24,55 +24,34 @@ public class ControlJuego {
      * Identificador de nivel. Valor inicial: 0. Conforme se sube de nivel se
      * incrementa su valor hasta un valor máximo.
      */
-    private int nivel = 0;
+    private int nivel = 2;
 
-    /**
-     * Permite jugar la partida.
-     * Acciones:<br>
-     * <br>Mientras el identificador del nivel sea menor que el id del máximo nivel
-     * <br>&nbsp;&nbsp;&nbsp;Conseguir un clon del nivel correspondiente al identificador de nivel
-     * <br>&nbsp;&nbsp;&nbsp;Hacer
-     * <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;redibujar la GUI
-     * <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interaccionar con el usuario para que éste pulse una tecla para mover el jugador.
-     * <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decidir la fila y columna a la que se intentará mover el jugador
-     * <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;intentar mover el jugador si no se ha acabado el nivel
-     * <br> &nbsp;&nbsp;&nbsp;Mientras no se haya acabado el nivel
-     * <br>&nbsp;&nbsp;&nbsp;redibujar la GUI
-     * <br>&nbsp;&nbsp;&nbsp;incrementar el identificador de nivel
-     */
-    public void empiezaPartida() {
+    public void partida() {
         while (nivel < niveles.size()) {
-            Nivel nivelActual = niveles.get(nivel).clonar();
+            Nivel nivelActual = niveles.get(nivel);
+            nivelActual.inicializar();
 
             boolean nivelAcabado = false;
             do {
                 redibuja(nivelActual);
                 int tecla = gui.leeTeclaPulsada();
-                int f = nivelActual.getCabeza().getFila();
-                int c = nivelActual.getCabeza().getColumna();
-
+                int df = 0;
+                int dc = 0;
                 switch (tecla) {
-                    case InterfazGrafica.TECLA_ABAJO:
-                        f++;
-                        break;
                     case InterfazGrafica.TECLA_ARRIBA:
-                        f--;
+                        df--;
                         break;
                     case InterfazGrafica.TECLA_DERECHA:
-                        c++;
+                        dc++;
                         break;
                     case InterfazGrafica.TECLA_IZQUIERDA:
-                        c--;
+                        dc--;
                         break;
                     case InterfazGrafica.TECLA_R:
-                        nivel--;
-                        nivelAcabado = true;
+                        nivelActual.inicializar();
                         break;
-
                 }
-                if (!nivelAcabado) {
-                    nivelAcabado = nivelActual.intentaMoverCabeza(f, c);
-                }
+                nivelAcabado = nivelActual.mueveCabeza(df, dc) == Const.PASO_FIN_NIVEL;
             } while (!nivelAcabado);
             redibuja(nivelActual);
             nivel++;
@@ -91,7 +70,7 @@ public class ControlJuego {
     private void redibuja(Nivel nivelActual) {
         for (int f = 0; f < Const.NIVEL_FILAS; f++) {
             for (int c = 0; c < Const.NIVEL_COLUMNAS; c++) {
-                String archivo = nivelActual.getCelda(f,c).getArchivoImagen();
+                String archivo = nivelActual.getCelda(f,c).getImagen();
                 gui.colocaImagen(archivo, f, c);
             }
         }

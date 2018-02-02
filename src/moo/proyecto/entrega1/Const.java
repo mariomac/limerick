@@ -35,12 +35,17 @@ public class Const {
     public static final int NIVEL_FILAS = 15;
 
     /**
-     * Nombre relativo del archivo en el que está la imagen de la cara de la serpiente
+     * Nombre relativo del archivo en el que está la imagen de la cabeza de la serpiente
      */
     public static final String ARCHIVO_CABEZA = "/imagenes/cabeza.png";
 
     /**
-     * Nombre relativo del archivo en el que está la imagen de la cara de la serpiente
+     * Nombre relativo del archivo en el que está la imagen de la cabeza roja de la serpiente
+     */
+    public static final String ARCHIVO_CABEZA_ROJA = "/imagenes/cabezaroja.png";
+
+    /**
+     * Nombre relativo del archivo en el que está la imagen del cuerpo de la serpiente
      */
     public static final String ARCHIVO_CUERPO = "/imagenes/cuerpo.png";
 
@@ -95,4 +100,7 @@ public class Const {
      */
     public static final char CELDA_CAJA = 'K';
 
+    public static final int PASO_OK = 0;
+    public static final int PASO_IMPOSIBLE = 1;
+    public static final int PASO_FIN_NIVEL = 2;
 }
