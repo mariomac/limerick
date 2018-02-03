@@ -26,10 +26,10 @@ public class Celda {
         if(contenido == null) {
             return Const.PASO_OK;
         }
-        if(contenido.esCogible()) {
+        if(contenido.isCogible()) {
             return contenido.coger();
         }
-        if(contenido.esEmpujable()) {
+        if(contenido.isEmpujable()) {
             return contenido.empujar(fila + df, columna + dc);
         }
         return Const.PASO_IMPOSIBLE;
@@ -42,8 +42,8 @@ public class Celda {
         return contenido.getImagen();
     }
 
-    public ContenidoCelda getContenido() {
-        return contenido;
+    public boolean isVacia() {
+        return contenido == null;
     }
 
     public void setContenido(ContenidoCelda contenido) {

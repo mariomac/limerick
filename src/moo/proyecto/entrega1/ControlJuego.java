@@ -18,17 +18,17 @@ public class ControlJuego {
     /**
      * Interfaz gráfica.
      */
-    InterfazGrafica gui = new InterfazGrafica(Const.NIVEL_FILAS, Const.NIVEL_COLUMNAS);
+    private InterfazGrafica gui = new InterfazGrafica(Const.NIVEL_FILAS, Const.NIVEL_COLUMNAS);
 
     /**
-     * Identificador de nivel. Valor inicial: 0. Conforme se sube de nivel se
+     * Identificador de nivelActual. Valor inicial: 0. Conforme se sube de nivelActual se
      * incrementa su valor hasta un valor máximo.
      */
-    private int nivel = 2;
+    private int nivelActual = 0;
 
     public void partida() {
-        while (nivel < niveles.size()) {
-            Nivel nivelActual = niveles.get(nivel);
+        while (nivelActual < niveles.size()) {
+            Nivel nivelActual = niveles.get(this.nivelActual);
             nivelActual.inicializar();
 
             boolean nivelAcabado = false;
@@ -54,18 +54,18 @@ public class ControlJuego {
                 nivelAcabado = nivelActual.mueveCabeza(df, dc) == Const.PASO_FIN_NIVEL;
             } while (!nivelAcabado);
             redibuja(nivelActual);
-            nivel++;
+            this.nivelActual++;
         }
     }
 
     /**
      * Este método redibuja la GUI.
-     * <br><br>Para cada celda del recinto del nivel en curso, colocar la imagen correspondiente a
+     * <br><br>Para cada celda del recinto del nivelActual en curso, colocar la imagen correspondiente a
      * lo que haya en ella (obstáculo, item o nada).
      * <br>Colocar la imagen del jugador en la celda que corresponda.
      * <br>Colorar la imagen del item que tenga el jugador en el bolsillo en la
      * celda que ocupa la primera fila y la última columna del recinto de juego.
-     * @param nivelActual identificador del nivel en juego.
+     * @param nivelActual identificador del nivelActual en juego.
      */
     private void redibuja(Nivel nivelActual) {
         for (int f = 0; f < Const.NIVEL_FILAS; f++) {

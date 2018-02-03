@@ -1,0 +1,68 @@
+@startuml
+
+
+class InterfazGrafica {
+    +{static} TECLA_ARRIBA:int
+    +{static} TECLA_IZQUIERDA:int
+    +{static} TECLA_DERECHA:int
+    +{static} TECLA_R:int
+    +leeTeclaPulsada():int
+    +colocaImagen(archivo:String, fila:int, col:int)
+}
+
+class ControlJuego {
+    -nivelEnJuego:int
+    -redibuja(n:Nivel)
+    +partida()
+    +cargaNiveles()
+}
+
+class Nivel {
+    -filas:int
+    -columnas:int
+    -datosMap:char[][]
+    +inicializar()
+    +getCelda(f:int, c:int):Celda
+    +mueveCabeza()
+}
+
+class Celda {
+    -fila:int
+    -columna:int
+    +pasa(df:int, dc:int):int
+    +getImagen():String
+    +isVacia():boolean
+    +setContenido(c:ContenidoCelda)
+}
+
+class ControlCabeza {
+
+}
+
+note as N1
+    contiene un array
+    de arrays bidimensionales
+    (es decir, un array de 3 dimensiones)
+    con los datos de cada nivel
+end note
+
+class DatosNiveles {
+    +{static} MAPAS char[][][]
+}
+
+N1 .right. DatosNiveles
+ControlJuego .up.> DatosNiveles
+ControlJuego -left-> InterfazGrafica : gui
+ControlJuego -> "1..*" Nivel : niveles
+ContenidoCelda -> Nivel
+
+Nivel --> "filas x columnas" Celda
+Nivel --> ControlCabeza
+
+class ContenidoCelda {
+
+}
+
+Celda --> "0..1" ContenidoCelda: contenido
+ContenidoCelda -up-> "0..1" ControlCabeza
+@enduml

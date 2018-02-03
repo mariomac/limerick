@@ -6,7 +6,7 @@ public class ControlCabeza {
 
     private int columna;
 
-    private int subidas = 0;
+    private int altura = 0;
 
     private Nivel nivel;
 
@@ -24,21 +24,21 @@ public class ControlCabeza {
         return columna;
     }
 
-    public boolean isLimiteSubidas() {
-        return subidas >= Const.MAX_SUBIDA;
+    public boolean isLimiteAltura() {
+        return altura >= Const.MAX_SUBIDA;
     }
 
     // TODO: meter en un static method para reaprovechar con el objeto caja
     public void actualizaPosicion(int df, int dc) {
         if (df < 0) {
-            subidas++;
+            altura++;
         } else {
-            subidas = 0;
+            altura = 0;
         }
         nivel.getCelda(fila, columna).setContenido(new ContenidoCelda(Const.CELDA_CUERPO, nivel));
         fila += df;
         columna += dc;
-        while (nivel.getCelda(fila + 1, columna).getContenido() == null) {
+        while (nivel.getCelda(fila + 1, columna).isVacia()) {
             nivel.getCelda(fila, columna).setContenido(new ContenidoCelda(Const.CELDA_CUERPO, nivel));
             fila++;
         }

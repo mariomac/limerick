@@ -32,7 +32,7 @@ public class Nivel {
      * valor de cada carácter del vector bidimensional indica el contenido de la
      * celda correspondiente del tablero.
      */
-    private char[][] mapaInicial;
+    private char[][] datosMapa;
 
     /**
      * Construye el recinto correspondiente a un nivel. Este nivel tendrá un recinto
@@ -51,13 +51,13 @@ public class Nivel {
      *
      * @param filas       número de filas del recinto
      * @param columnas    numero de columnas del recinto
-     * @param mapaInicial matriz de caracteres (con dimensiones iguales a las indicadas
+     * @param datosMapa matriz de caracteres (con dimensiones iguales a las indicadas
      *                    por los dos anteriores parámentros) cuyos contenidos indican los objetos
      *                    (items/obstáculos) que deben aparecer en la posición correspondiente del
      *                    recinto.
      */
-    public Nivel(int filas, int columnas, char[][] mapaInicial) {
-        this.mapaInicial = mapaInicial;
+    public Nivel(int filas, int columnas, char[][] datosMapa) {
+        this.datosMapa = datosMapa;
         this.filas = filas;
         this.columnas = columnas;
         celdas = new Celda[filas][columnas];
@@ -67,25 +67,17 @@ public class Nivel {
         for (int f = 0; f < filas; f++) {
             for (int c = 0; c < columnas; c++) {
                 ContenidoCelda contenido = null;
-                if (mapaInicial[f][c] == Const.CELDA_CABEZA) {
+                if (datosMapa[f][c] == Const.CELDA_CABEZA) {
                     controlCabeza = new ControlCabeza(this, f, c);
-                    contenido = new ContenidoCelda(mapaInicial[f][c], this, controlCabeza);
-                } else if(mapaInicial[f][c] != Const.CELDA_VACIA) {
-                    contenido = new ContenidoCelda(mapaInicial[f][c], this);
+                    contenido = new ContenidoCelda(datosMapa[f][c], this, controlCabeza);
+                } else if(datosMapa[f][c] != Const.CELDA_VACIA) {
+                    contenido = new ContenidoCelda(datosMapa[f][c], this);
                 }
                 celdas[f][c] = new Celda(f, c, contenido);
             }
         }
     }
 
-    /**
-     * Devuelve una referencia al controlCabeza
-     *
-     * @return referencia al controlCabeza
-     */
-    public ControlCabeza getControlCabeza() {
-        return controlCabeza;
-    }
 
     /**
      * Devuelve una referencia a la celda que ocupa una cierta posición en
@@ -101,7 +93,7 @@ public class Nivel {
     }
 
     public int mueveCabeza(int df, int dc) {
-        if (df < 0 && controlCabeza.isLimiteSubidas()) {
+        if (df < 0 && controlCabeza.isLimiteAltura()) {
             return Const.PASO_IMPOSIBLE;
         }
 

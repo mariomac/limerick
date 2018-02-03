@@ -36,7 +36,7 @@ public class ContenidoCelda {
             case Const.CELDA_PARED:
                 return Const.ARCHIVO_PARED;
             case Const.CELDA_CABEZA:
-                if(controlCabeza.isLimiteSubidas()) {
+                if(controlCabeza.isLimiteAltura()) {
                     return Const.ARCHIVO_CABEZA_ROJA;
                 } else {
                     return Const.ARCHIVO_CABEZA;
@@ -52,11 +52,11 @@ public class ContenidoCelda {
         }
     }
 
-    public boolean esEmpujable() {
+    public boolean isEmpujable() {
         return tipo == Const.CELDA_CAJA;
     }
 
-    public boolean esCogible() {
+    public boolean isCogible() {
         return tipo == Const.CELDA_MANZANA;
     }
 
@@ -67,15 +67,15 @@ public class ContenidoCelda {
         return Const.PASO_IMPOSIBLE;
     }
 
-    public int empujar(int fila, int columna) {
-        if (nivel.getCelda(fila, columna).getContenido() != null) {
+    public int empujar(int haciaFila, int haciaColumna) {
+        if (!nivel.getCelda(haciaFila, haciaColumna).isVacia()) {
             return Const.PASO_IMPOSIBLE;
         }
         if (tipo == Const.CELDA_CAJA) {
-            while(nivel.getCelda(fila + 1, columna).getContenido() == null) {
-                fila++;
+            while(nivel.getCelda(haciaFila + 1, haciaColumna).isVacia()) {
+                haciaFila++;
             }
-            nivel.getCelda(fila,columna).setContenido(this);
+            nivel.getCelda(haciaFila,haciaColumna).setContenido(this);
         }
         return Const.PASO_OK;
     }
