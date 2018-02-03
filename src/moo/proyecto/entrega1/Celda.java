@@ -44,11 +44,9 @@ public class Celda {
      * <p>Por ejemplo:</p>
      * <ul>
      *     <li>Si la celda está vacía, no hará nada especial.</li>
-     *     <li>Si en la celda hay un contenido <i>cogible</i>, realizará la acción de cogerlo
-     *     (método {@link ContenidoCelda#coger()}.</li>
+     *     <li>Si en la celda hay un contenido <i>cogible</i>, realizará la acción de cogerlo.</li>
      *     <li>Si en la celda hay un contenido <i>empujable</i>, realizará la acción de empujarlo
-     *     hacia la posición dada por <code>(fila+df, columna+df)</code> (método
-     *     {@link ContenidoCelda#empujar(int, int)}</li>
+     *     hacia la posición dada por <code>(fila+df, columna+df)</code>.</li>
      * </ul>
      * <p>Retornará además el resultado del intento de paso:</p>
      * <ul>
@@ -67,6 +65,8 @@ public class Celda {
      *           derecha; un 0, que no cambiará de columna.
      * @return El resultado del intento de paso ({@link Const#PASO_OK}, {@link Const#PASO_FIN_NIVEL}
      *         o {@link Const#PASO_IMPOSIBLE})
+     * @see ContenidoCelda#coger()
+     * @see ContenidoCelda#empujar(int, int)
      */
     public int intentaPasar(int df, int dc) {
         if(contenido == null) {

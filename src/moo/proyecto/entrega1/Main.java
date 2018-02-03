@@ -3,20 +3,13 @@ package moo.proyecto.entrega1;
 public class Main {
 
     /**
-     * Método que da inicio al programa.
-     * <br><br>Crear un nuevo objeto ControlJuego.
-     * <br>Cargar los niveles.
-     * <br>Empezar partida.
-     * @param args the command line arguments
-     * @throws InterruptedException lanza una excepción de esta clase si se
-     * produce alguna situación anómala.
+     * Método que da inicio al programa. Se limina a instanciar el Control del juego e invocar
+     * a la partida.
+     * @see ControlJuego#partida()
      */
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         ControlJuego cj = new ControlJuego();
-
-        cj.cargaNiveles();
         cj.partida();
-
         System.exit(0);
     }
 

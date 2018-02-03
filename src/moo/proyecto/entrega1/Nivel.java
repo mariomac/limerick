@@ -2,9 +2,8 @@ package moo.proyecto.entrega1;
 
 /**
  * Cada objeto de la clase Nivel contiene toda la información correspondiente a
- * uno de los niveles del juego. Cada nivel está formado por el tablero y el
- * controlCabeza. En las celdas del tablero se distribuyen los objetos y los items,
- * así como el controlCabeza.
+ * uno de los niveles del juego. Cada nivel está formado por una matriz de {@link Celda} y el
+ * {@link ControlCabeza}.
  */
 public class Nivel {
 
@@ -12,19 +11,13 @@ public class Nivel {
      * ControlCabeza en el tablero
      */
     private ControlCabeza controlCabeza;
+
     /**
      * Vector bidimensional de celdas. Cada posición se corresponde con una
      * celda del tablero de juego.
      */
     private Celda[][] celdas;
-    /**
-     * Número de filas del tablero
-     */
-    private int filas;
-    /**
-     * Número de columnas del tablero
-     */
-    private int columnas;
+
     /**
      * Vector bidimensional de caracteres. Cada posición contiene un caracter.
      * Cada posición del vector indica el contenido de la celda del tablero
@@ -35,37 +28,29 @@ public class Nivel {
     private char[][] datosMapa;
 
     /**
-     * Construye el recinto correspondiente a un nivel. Este nivel tendrá un recinto
-     * con el número de filas y columnas indicadas en los correspondientes argumentos.
-     * En el interior del recinto se distribuirán los obstáculos y los items
-     * según los contenidos de la matriz de caracteres pasada como tercer argumento.
-     * Para una relación de la correspondencia entre los valores de caractéres y los
-     * obstáculos/items a los que darán lugar, ver {@link moo.proyecto.entrega1}
-     * Este método debe crear el nuevo recinto como una matriz de celdas. Posteriormente
-     * debe añadir en las celdas los obstáculos/items que corresponda. Para ello recorrerá
-     * la matriz de caracteres pasada como tercer argumento. El método crea
-     * una nueva celda por cada posición de la matriz del recinto del juego. En cada
-     * celda hay que depositar el item/obstáculo indicado por el carácter presente en la
-     * misma posición del mapaInicial de caracteres (si hay un carácter distinto del espacio
-     * en blanco, que indica ausencia de obstáculos/items).
+     * Constructor.
      *
      * @param filas       número de filas del recinto
      * @param columnas    numero de columnas del recinto
-     * @param datosMapa matriz de caracteres (con dimensiones iguales a las indicadas
+     * @param datosMapa   matriz de caracteres (con dimensiones iguales a las indicadas
      *                    por los dos anteriores parámentros) cuyos contenidos indican los objetos
-     *                    (items/obstáculos) que deben aparecer en la posición correspondiente del
-     *                    recinto.
+     *                    que deben aparecer en la posición correspondiente del recinto, cuyos valores
+     *                    serán ({@link Const#CELDA_VACIA}, {@link Const#CELDA_PARED},
+     *                    {@link Const#CELDA_CAJA}, etc...
      */
     public Nivel(int filas, int columnas, char[][] datosMapa) {
         this.datosMapa = datosMapa;
-        this.filas = filas;
-        this.columnas = columnas;
         celdas = new Celda[filas][columnas];
     }
 
+    /**
+     * Dados los datos del mapa que se pasaron en el constructor (chars), inicializa los objetos
+     * {@link Celda} y {@link ContenidoCelda} correspondientes, que serán los que implementen la
+     * lógica del juego.
+     */
     public void inicializar() {
-        for (int f = 0; f < filas; f++) {
-            for (int c = 0; c < columnas; c++) {
+        for (int f = 0; f < datosMapa.length; f++) {
+            for (int c = 0; c < datosMapa[f].length; c++) {
                 ContenidoCelda contenido = null;
                 if (datosMapa[f][c] == Const.CELDA_CABEZA) {
                     controlCabeza = new ControlCabeza(this, f, c);
@@ -92,6 +77,28 @@ public class Nivel {
         return celdas[fila][col];
     }
 
+    /**
+     * <p>Intenta mover la cabeza por el Nivel, dado un vector de dirección <code>(df, dc)</code>
+     * que indican la dirección en la que la cabeza de la serpiente
+     * se está moviendo, en términos de "filas, columnas". Por ejemplo, si <code>df==1</code> y
+     * <code>dc==0</code>, quiere decir que la serpiente se está moviendo una celda hacia la
+     * derecha. Si <code>df==0</code> y <code>dc==-1</code>, quiere decir que la serpiente se
+     * está moviendo una celda hacia arriba.</p>
+     * <p>El sistema primero debe comprobar si se puede pasar a celda de la fila y la columna
+     * contigua a la cabeza. Si se puede, entonces se hace efectivo el paso.</p>
+     * <p>Si el movimiento es hacia arriba, también debe comprobar que no se haya superado el
+     * límite de alturas de la cabeza.</p>
+     * @param df Dirección de la serpiente, en columnas. Un -1 indica que se intenta mover una
+     *           columna hacia arriba; un 0, indica que la cabeza no cambiará de fila.
+     * @param dc Dirección de la serpiente, en columnas. Un -1 indica que la serpiente se quiere
+     *           mover una columna hacia la izquierda; un +1, indica que quiere moverse hacia la
+     *           derecha; un 0, que no cambiará de columna.
+     * @return El resultado del movimiento, siendo {@link Const#PASO_FIN_NIVEL} el valor que indica
+     *         que se ha llegado al final del nivel.
+     * @see ControlCabeza#isLimiteAltura()
+     * @see ControlCabeza#mueve(int, int)
+     * @see Celda#intentaPasar(int, int)
+     */
     public int mueveCabeza(int df, int dc) {
         if (df < 0 && controlCabeza.isLimiteAltura()) {
             return Const.PASO_IMPOSIBLE;
@@ -101,7 +108,7 @@ public class Nivel {
         int columna = controlCabeza.getColumna() + dc;
         int paso = celdas[fila][columna].intentaPasar(df, dc);
         if (paso != Const.PASO_IMPOSIBLE) {
-            controlCabeza.actualizaPosicion(df, dc);
+            controlCabeza.mueve(df, dc);
         }
         return paso;
     }

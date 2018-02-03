@@ -99,7 +99,9 @@ public class InterfazGrafica {
     }
 
     /**
-     * Devuelve un código numérico en función de la tecla que el usuario haya pulsado.
+     * Devuelve un código numérico en función de la tecla que el usuario haya pulsado, que puede
+     * ser {@link #TECLA_ARRIBA}, {@link #TECLA_ABAJO}, {@link #TECLA_IZQUIERDA}, {@link #TECLA_DERECHA},
+     * o {@link #TECLA_R}.
      *
      * @return el código de la tecla pulsada.
      */

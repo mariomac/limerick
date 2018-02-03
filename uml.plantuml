@@ -12,7 +12,7 @@ class InterfazGrafica {
 
 class ControlJuego {
     -nivelEnJuego:int
-    -redibuja(n:Nivel)
+    +redibujaNivelActual()
     +partida()
     +cargaNiveles()
 }
