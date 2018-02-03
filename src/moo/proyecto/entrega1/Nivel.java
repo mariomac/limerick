@@ -69,7 +69,7 @@ public class Nivel {
                 ContenidoCelda contenido = null;
                 if (datosMapa[f][c] == Const.CELDA_CABEZA) {
                     controlCabeza = new ControlCabeza(this, f, c);
-                    contenido = new ContenidoCelda(datosMapa[f][c], this, controlCabeza);
+                    contenido = new ContenidoCelda(this, controlCabeza);
                 } else if(datosMapa[f][c] != Const.CELDA_VACIA) {
                     contenido = new ContenidoCelda(datosMapa[f][c], this);
                 }

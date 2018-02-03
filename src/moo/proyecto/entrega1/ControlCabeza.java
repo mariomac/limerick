@@ -42,6 +42,6 @@ public class ControlCabeza {
             nivel.getCelda(fila, columna).setContenido(new ContenidoCelda(Const.CELDA_CUERPO, nivel));
             fila++;
         }
-        nivel.getCelda(fila, columna).setContenido(new ContenidoCelda(Const.CELDA_CABEZA, nivel, this));
+        nivel.getCelda(fila, columna).setContenido(new ContenidoCelda(nivel, this));
     }
 }
