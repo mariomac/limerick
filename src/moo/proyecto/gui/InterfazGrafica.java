@@ -1,11 +1,5 @@
 package moo.proyecto.gui;
 
-import java.util.HashMap;
-import java.util.Queue;
-import java.util.Random;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.Semaphore;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -21,6 +15,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
+import java.util.HashMap;
+import java.util.Queue;
+import java.util.Random;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Semaphore;
 
 /**
  * Esta clase implementa la interfaz gráfica de usuario que usará el programa. NO TENÉIS QUE AÑADIR
@@ -75,6 +75,7 @@ public class InterfazGrafica {
      * Mapa que mapea el nombre de un archivo con la imagen correspondiente.
      */
     private HashMap<String, ImageInfo> images = new HashMap<>();
+    private boolean isLaunched = false;
 
     /**
      * Constructor. Crea una interfaz gráfica con el número de filas y columnas indicadas por los
@@ -115,7 +116,7 @@ public class InterfazGrafica {
 
     /**
      * Coloca una cierta imagen en una posición de la matriz del recinto. La imagen está depositada
-     * en un archivo cuyo nombre se pasa como argumento.
+     * en un archivo cuyo nombre se intentaPasar como argumento.
      *
      * @param archivo nombre del archivo que contiene la imagen. Si es una referencia a null,
      *                no se dibujará nada o se borrará la imagen que ya haya en ese recuadro.
@@ -133,7 +134,7 @@ public class InterfazGrafica {
     }
 
     /**
-     * Consigue la imagen almacenada en el archivo cuyo nombre se pasa como argumento y añade una
+     * Consigue la imagen almacenada en el archivo cuyo nombre se intentaPasar como argumento y añade una
      * nueva entrada en el mapa que contiene objetos con información de imágenes
      *
      * @param path el nombre del archivo
@@ -152,23 +153,11 @@ public class InterfazGrafica {
         return ii;
     }
 
-    /**
-     * Clase privada: ImageInfo. Contiene información de una cierta imagen
-     */
-    private class ImageInfo {
-
-        /**
-         * El objeto instancia de clase Image, que se presentará por pantalla
-         */
-        Image image;
-        /*
-        El tamaño en altura de la trama de la imagen
-        */
-        int frameSize;
-        /*
-        La relación entre la anchura de la imagen y su altura
-        */
-        int frames;
+    private void mostrar() {
+        if (!isLaunched) {
+            isLaunched = true;
+            Application.launch(GUIApplication.class);
+        }
     }
 
     /**
@@ -177,15 +166,26 @@ public class InterfazGrafica {
     public static class GUIApplication extends Application {
 
         /**
+         * Cola que contiene los códigos numéricos correspondientes a las teclas pulsadas por el
+         * usuario
+         */
+        final static Queue<Integer> entradaCursor = new ConcurrentLinkedQueue<>();
+        /**
+         * "Latch" para sincronizar la lectura de teclas
+         */
+        final static Semaphore esperaTeclas = new Semaphore(0);
+        /**
          * Número de filas de la escena
          */
         static int filas;
-
         /**
          * Número de columnas de la escena
          */
         static int columnas;
-
+        /**
+         * Matriz de imágenes para presentar el recinto de juego
+         */
+        static ImageInfo[][] pieces;
         /**
          * La escena del juego
          */
@@ -195,29 +195,13 @@ public class InterfazGrafica {
          */
         Canvas sceneCanvas;
         /**
-         * El objeto que actualiza la imagen
-         */
-        private Updater timer;
-        /**
          * Contenedor para la interfaz gráfica de usuario
          */
         Stage primaryStage;
-
         /**
-         * Cola que contiene los códigos numéricos correspondientes a las teclas pulsadas por el
-         * usuario
+         * El objeto que actualiza la imagen
          */
-        final static Queue<Integer> entradaCursor = new ConcurrentLinkedQueue<>();
-
-        /**
-         * "Latch" para sincronizar la lectura de teclas
-         */
-        final static Semaphore esperaTeclas = new Semaphore(0);
-
-        /**
-         * Matriz de imágenes para presentar el recinto de juego
-         */
-        static ImageInfo[][] pieces;
+        private Updater timer;
 
         /**
          * Inicia la interfaz gráfica de usuario.
@@ -354,9 +338,9 @@ public class InterfazGrafica {
                         if (ii != null) {
                             int animationIndex = (int) ((l / ANIMATION_SPEED_NS) % ii.frames);
                             gc.drawImage(ii.image, animationIndex * ii.frameSize, 0, ii.frameSize,
-                                         ii.frameSize,
-                                         col * TILE_SIZE, row * TILE_SIZE, ii.frameSize,
-                                         ii.frameSize);
+                                    ii.frameSize,
+                                    col * TILE_SIZE, row * TILE_SIZE, ii.frameSize,
+                                    ii.frameSize);
 
                         }
                     }
@@ -366,12 +350,22 @@ public class InterfazGrafica {
 
     }
 
-    private boolean isLaunched = false;
+    /**
+     * Clase privada: ImageInfo. Contiene información de una cierta imagen
+     */
+    private class ImageInfo {
 
-    private void mostrar() {
-        if (!isLaunched) {
-            isLaunched = true;
-            Application.launch(GUIApplication.class);
-        }
+        /**
+         * El objeto instancia de clase Image, que se presentará por pantalla
+         */
+        Image image;
+        /**
+         * El tamaño en altura de la trama de la imagen
+         */
+        int frameSize;
+        /**
+         * La relación entre la anchura de la imagen y su altura
+         */
+        int frames;
     }
 }

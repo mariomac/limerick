@@ -25,7 +25,7 @@ public class ControlCabeza {
     }
 
     public boolean isLimiteAltura() {
-        return altura >= Const.MAX_SUBIDA;
+        return altura >= Const.MAX_ALTURA;
     }
 
     // TODO: meter en un static method para reaprovechar con el objeto caja

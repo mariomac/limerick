@@ -29,14 +29,20 @@ class Nivel {
 class Celda {
     -fila:int
     -columna:int
-    +pasa(df:int, dc:int):int
+    +intentaPasar(df:int, dc:int):int
     +getImagen():String
     +isVacia():boolean
     +setContenido(c:ContenidoCelda)
 }
 
 class ControlCabeza {
-
+    -fila:int
+    -columna:int
+    -altura:int
+    +getFila():int
+    +getColumna():int
+    +isLimiteAltura():boolean
+    +actualizaPosicion(df:int, dc:int)
 }
 
 note as N1
@@ -54,13 +60,18 @@ N1 .right. DatosNiveles
 ControlJuego .up.> DatosNiveles
 ControlJuego -left-> InterfazGrafica : gui
 ControlJuego -> "1..*" Nivel : niveles
-ContenidoCelda -> Nivel
+ContenidoCelda -up-> Nivel
 
 Nivel --> "filas x columnas" Celda
 Nivel --> ControlCabeza
 
 class ContenidoCelda {
-
+    -tipo:char
+    +getImagen():String
+    +isEmpujable():boolean
+    +isCojible():boolean
+    +coger():int
+    +empujar(f:int,c:int):int
 }
 
 Celda --> "0..1" ContenidoCelda: contenido

@@ -99,7 +99,7 @@ public class Nivel {
 
         int fila = controlCabeza.getFila() + df;
         int columna = controlCabeza.getColumna() + dc;
-        int paso = celdas[fila][columna].pasa(df, dc);
+        int paso = celdas[fila][columna].intentaPasar(df, dc);
         if (paso != Const.PASO_IMPOSIBLE) {
             controlCabeza.actualizaPosicion(df, dc);
         }
