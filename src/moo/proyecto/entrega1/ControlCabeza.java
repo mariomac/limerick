@@ -67,15 +67,15 @@ public class ControlCabeza {
      * <p>Actualiza la posición de la cabeza, dado un vector de dirección <code>(df, dc)</code>
      * que indican la dirección en la que la cabeza de la serpiente
      * se está moviendo, en términos de "filas, columnas". Por ejemplo, si <code>df==1</code> y
-     * <code>dc==0</code>, quiere decir que la serpiente se está moviendo una celda hacia la
-     * derecha. Si <code>df==0</code> y <code>dc==-1</code>, quiere decir que la serpiente se
-     * está moviendo una celda hacia arriba.</p>
+     * <code>dc==0</code>, quiere decir que la serpiente se está moviendo una celda hacia abajo.
+     *  Si <code>df==0</code> y <code>dc==-1</code>, quiere decir que la serpiente se
+     * está moviendo una celda hacia la izquierda.</p>
      *
      * <p>El método debe encargarse de contabilizar la altura de la cabeza, así como de la física
      * (caerá hacia abajo si en la posición hacia la que se ha movido no hay suelo).</p>
      *
-     * @param df Dirección de la serpiente, en columnas. Un -1 indica que se intenta mover una
-     *           columna hacia arriba; un 0, indica que la cabeza no cambiará de fila.
+     * @param df Dirección de la serpiente, en filas. Un -1 indica que se intenta mover una
+     *           fila hacia arriba; un 0, indica que la cabeza no cambiará de fila.
      * @param dc Dirección de la serpiente, en columnas. Un -1 indica que la serpiente se quiere
      *           mover una columna hacia la izquierda; un +1, indica que quiere moverse hacia la
      *           derecha; un 0, que no cambiará de columna.

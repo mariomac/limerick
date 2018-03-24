@@ -38,9 +38,9 @@ public class Celda {
      * hacia la celda.</p>
      * <p>Los parámetros <code>df, dc</code> indican la dirección en la que la cabeza de la serpiente
      * se está moviendo, en términos de "filas, columnas". Por ejemplo, si <code>df==1</code> y
-     * <code>dc==0</code>, quiere decir que la serpiente se está moviendo una celda hacia la
-     * derecha. Si <code>df==0</code> y <code>dc==-1</code>, quiere decir que la serpiente se
-     * está moviendo una celda hacia arriba.</p>
+     * <code>dc==0</code>, quiere decir que la serpiente se está moviendo una celda hacia abajo.
+     *  Si <code>df==0</code> y <code>dc==-1</code>, quiere decir que la serpiente se
+     * está moviendo una celda hacia la izquierda.</p>
      * <p>Por ejemplo:</p>
      * <ul>
      *     <li>Si la celda está vacía, no hará nada especial.</li>
@@ -58,8 +58,8 @@ public class Celda {
      *     una pared o porque había un objeto movible (caja) que no se podía mover ya que había
      *     algún otro objeto en la celda donde se empujó.</li>
      * </ul>
-     * @param df Dirección de la serpiente, en columnas. Un -1 indica que se intenta mover una
-     *           columna hacia arriba; un 0, indica que la cabeza no cambiará de fila.
+     * @param df Dirección de la serpiente, en filas. Un -1 indica que se intenta mover una
+     *           fila hacia arriba; un 0, indica que la cabeza no cambiará de fila.
      * @param dc Dirección de la serpiente, en columnas. Un -1 indica que la serpiente se quiere
      *           mover una columna hacia la izquierda; un +1, indica que quiere moverse hacia la
      *           derecha; un 0, que no cambiará de columna.

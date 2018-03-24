@@ -319,8 +319,6 @@ public class InterfazGrafica {
          */
         private class Updater extends AnimationTimer {
 
-            private Random rnd = new Random();
-
             private GUIApplication guiApp;
 
             public Updater(GUIApplication guiApp) {

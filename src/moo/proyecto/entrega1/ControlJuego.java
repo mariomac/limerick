@@ -33,12 +33,13 @@ public class ControlJuego {
      * y para cada nivel:
      * <ul>
      *     <li>Lo inicializa.</li>
-     *     <li>Mientras la cabeza no llegue a comer la manzana:</li>
+     *     <li>Mientras la cabeza no llegue a comer la manzana:
      *     <ul>
      *         <li>Redibuja el nivel actual.</li>
      *         <li>Gestiona la entrada de datos del teclado, moviendo la serpiente en la dirección
      *         deseada, o reiniciando el nivel si se ha pulsado la tecla R.</li>
      *     </ul>
+     *     </li>
      *     <li>Cuando se haya llegado al final del nivel, se pasa al siguiente nivel, se
      *     inicializa y se vuelve al bucle anterior.</li>
      *     <li>El método finaliza cuando se hayan recorrido todos los niveles</li>

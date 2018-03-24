@@ -115,17 +115,19 @@ public class ContenidoCelda {
     /**
      * Realiza la acción resultante de empujar el elemento contenido en la celda hacia las filas
      * y columnas dadas por los argumentos <code>haciaFila</code> y <code>haciaColumna</code>:
-     * <li>
+     * <ul>
      *     <li>Si en la posición de destino del elemento empujado (haciaFila, haciaColumna) ya hay
      *     algún otro objeto, retornará {@link Const#PASO_IMPOSIBLE}, ya que la serpiente sólo tiene
      *     fuerza para arrastrar un solo objeto.</li>
      *     <li>Si no hay nada, empujará el objeto hacia la posición (haciaFila, haciaColumna).</li>
      *     <li>Si lo ha empujado y en esa posición no hay suelo, hará descender el objeto hasta que
      *     encuentre un suelo (simulando el efecto de que la caja cae).</li>
-     * </li>
+     * </ul>
      *
      * Si el objeto se ha podido empujar, retornará {@link Const#PASO_OK}.
      *
+     * @param haciaFila fila hacia la que se empuja el elemento
+     * @param haciaColumna columna hacia la que se empuja el elemento
      * @return {@link Const#PASO_OK} si se ha podido mover el objeto empujado, o
      * (@link Const#PASO_IMPOSIBLE) en caso contrario.
      */
