@@ -1,0 +1,244 @@
+// ESTO ES UN FICHERO QUE GUARDA LOS MAPAS DE LAS PANTALLAS. SU FORMATO ES EL SIGUIENTE:
+//
+//     - Una línea que empieza con los caracteres '//' es una línea a ignorar
+//     - Cada línea de texto representa una fila en el mapa del juego, con los caracteres pertenecientes al tipo
+//       de objeto en escena ahí situado.
+//     - Las líneas tendrán una longitud dada por la constante Const.NIVEL_COLUMNAS. Todo lo que se añada a partir de
+//       esa columna será ignorado
+//     - Cada nivel tendrá un número de líneas dado por la constante Const.NIVEL_FILAS
+//     - El archivo acaba con la línea '-- FIN --' (sin comillas), que indica que a partir de ahí hay que dejar de leer.
+//
+// -- Nivel 1 --
+//
+###################
+#                 #
+#  #######  #     #  El código que lea estos archivos, ignorará todo
+#        #   #    #  lo que esté escrito a partir de Const.NIVEL_COLUMNAS (19).
+#        ######   #  Así puedo poner comentarios al lado de los niveles.
+#            #    #
+#           #     #
+#                 #
+#                 #
+#                 #
+#                 #
+#  O              #
+#########         #
+#########     M   #
+###################
+//
+// -- Nivel 2 --
+//
+###################
+#                 #
+#           #     #
+#            #    #
+#  ############   #
+#            #    #
+#           #     #
+#                 #
+#                 #
+#          #      #
+#          #      #
+#         ##      #
+#     #   ##      #
+#  O  #   ##  M   #
+###################
+//
+// -- Nivel 3 --
+//
+###################
+#    #            #  En este nivel introducimos por primera vez el objeto CAJA
+#   #             #
+#  ############   #
+#   #         #   #
+#    #        #   #
+#             #   #
+#             #   #
+#     ########    #
+#                 #
+#  M       K      #
+####### ####### ###
+############### ###
+######O       K  K#
+###################
+//
+// -- Nivel 4 --
+//
+###################
+#                 #
+#                 #
+#                 #
+# O             M #
+######         ####
+## ###            #
+## ###            #
+## ###            #
+## ###            #
+ # # #     ########
+#   ##            #
+## ###            #
+######            #
+###################
+//
+// -- Nivel 5 --
+//
+###################
+#        #        #
+#        #        #
+###             ###
+#                 #
+#     O     M     #
+#    ###   ###    #
+#  ###### ######  #
+#       # #       #
+#       ###       #
+####           ####
+#                 #
+#                 #
+######       ######
+###################
+//
+// -- Nivel 6 --
+//
+###################
+#   #          #  #
+#   #     M    #  #
+#   #    ###   #  #
+#   #          #  #
+#   #          #  #
+#   #          #  #
+#   #          #  #
+#   #          #  #
+#   #          #  #
+#   #          #  #
+#   #          #  #
+#   #          #  #
+#   #     O    #  #
+###################
+//
+// -- Nivel 7 --
+//
+###################
+#                 #
+#                 #
+#                 #
+#   K        K    #
+#  ###      ###   #
+#                 #
+#                 #
+#   O        M    #
+######### ## # ####
+###################
+#                 #
+#                 #
+#                 #
+###################
+//
+// -- Nivel 8 --
+//
+###################
+#    #       #    #
+#    # M     #    #
+#    #### ####    #
+#    #  # ####    #
+#    #  #    #    #
+#    #  #    #    #
+#    #  #    #    #
+#    #### ####    #
+#    #    #  #    #
+#    #    #  #    #
+#    #    #  #    #
+#    #### #  #    #
+#    #  #O#  #    #
+###################
+//
+// -- Nivel 9 --
+//
+###################
+#                 #
+#               K #
+#            #### #
+#                 #
+#       #   # #   #
+#  O    #   # #M  #
+# ############### #
+# ############### #
+# #   #   #   #   #
+#   #   #   #   # #
+###################
+#                 #
+#                 #
+###################
+//
+// -- Nivel 10 --
+//
+###################
+#                 #
+#      K   K      #
+#     ### ###     #
+#                 #
+#      K   K      #
+#     ### ###     #
+#                 #
+#  M   K   K   O  #
+# ####### ####### #
+# ##   ## ##   ## #
+# ## # ## ## # ## #
+# ## # ##### # ## #
+#                 #
+###################
+//
+// -- Nivel 11 --
+//
+###################
+#                 #
+#   K             #
+#   K             #
+#   K             #
+#   KKK           #
+#   KKK K         #
+#  KKKK KK       M#
+#  KKKK KK       K#
+#  KKKKKKK     K K#
+#  KKKKKKK   K K K#
+# KKKKKKKKK  K K K#
+# KKKKKKKKK  K KKK#
+#OKKKKKKKKKKKK KKK#
+###################
+//
+// -- Nivel 12 --
+//
+###################
+#                 #
+#                 #
+#                 #
+#                 #
+# M          K    #
+#### ##     ###   #
+#######     ###   #
+#                 #
+#                 #
+#   O             #
+#  #############  #
+###################
+#                 #
+###################
+//
+// -- Nivel 13--
+//
+###################
+#                 #
+##           K    #
+#M ##   ###  ##  ##
+## ##   # #     ###
+####    # #     ###
+#            ######
+## ################
+#               K #
+## ##  #   #    # #
+#####  # # #    # #
+#   #  #   #      #
+#          #   ####
+# O  ##      ######
+###################
+-- FIN --

@@ -1,21 +1,23 @@
 package moo.proyecto.entrega1;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import moo.proyecto.entrega2.ArchivoMalFormateadoException;
+import moo.proyecto.entrega2.CargadorNiveles;
 import moo.proyecto.gui.InterfazGrafica;
 
 /**
  * Clase que implementa el control del juego. Se encarga de gestionar la carga de los datos de los
  * niveles, el bucle principal de la partida, así como de recoger la entrada del teclado y
- *
  */
 public class ControlJuego {
 
     /**
      * Secuencia de los distintos niveles en los que se desarrolla el juego.
      */
-    private List<Nivel> niveles = new ArrayList<>();
+    private List<Nivel> niveles;
 
     /**
      * Interfaz gráfica.
@@ -32,21 +34,27 @@ public class ControlJuego {
      * Bucle principal del juego, se encargará de cargar los niveles y luego recorrerlos uno a uno,
      * y para cada nivel:
      * <ul>
-     *     <li>Lo inicializa.</li>
-     *     <li>Mientras la cabeza no llegue a comer la manzana:
-     *     <ul>
-     *         <li>Redibuja el nivel actual.</li>
-     *         <li>Gestiona la entrada de datos del teclado, moviendo la serpiente en la dirección
-     *         deseada, o reiniciando el nivel si se ha pulsado la tecla R.</li>
-     *     </ul>
-     *     </li>
-     *     <li>Cuando se haya llegado al final del nivel, se pasa al siguiente nivel, se
-     *     inicializa y se vuelve al bucle anterior.</li>
-     *     <li>El método finaliza cuando se hayan recorrido todos los niveles</li>
+     * <li>Lo inicializa.</li>
+     * <li>Mientras la cabeza no llegue a comer la manzana:
+     * <ul>
+     * <li>Redibuja el nivel actual.</li>
+     * <li>Gestiona la entrada de datos del teclado, moviendo la serpiente en la dirección
+     * deseada, o reiniciando el nivel si se ha pulsado la tecla R.</li>
+     * </ul>
+     * </li>
+     * <li>Cuando se haya llegado al final del nivel, se pasa al siguiente nivel, se
+     * inicializa y se vuelve al bucle anterior.</li>
+     * <li>El método finaliza cuando se hayan recorrido todos los niveles</li>
      * </ul>
      */
     public void partida() {
-        cargaNiveles();
+        try {
+            cargaNiveles();
+        } catch (Exception e) {
+            System.err.println("Error cargando archivo de niveles! " + e.getMessage());
+            return;
+        }
+
         while (nivelActual < niveles.size()) {
             Nivel nivelActual = niveles.get(this.nivelActual);
             nivelActual.inicializar();
@@ -82,13 +90,14 @@ public class ControlJuego {
      * Este método redibuja el nivel actual en la {@link InterfazGrafica}.
      * Para cada celda del recinto del nivelActual en curso, colocar la imagen correspondiente a
      * lo que haya en ella, en la posición correspondiente.
+     *
      * @see Celda#getImagen()
      * @see InterfazGrafica#colocaImagen(String, int, int)
      */
     public void redibujaNivelActual() {
         for (int f = 0; f < Const.NIVEL_FILAS; f++) {
             for (int c = 0; c < Const.NIVEL_COLUMNAS; c++) {
-                String archivo = niveles.get(nivelActual).getCelda(f,c).getImagen();
+                String archivo = niveles.get(nivelActual).getCelda(f, c).getImagen();
                 gui.colocaImagen(archivo, f, c);
             }
         }
@@ -96,11 +105,9 @@ public class ControlJuego {
 
     /**
      * Crea y guarda en memoria los niveles a partir de los datos que se encuentran
-     * en {@link DatosNiveles#MAPAS}.
+     * en el fichero "./niveles.txt".
      */
-    public void cargaNiveles() {
-        for(char[][] mapa : DatosNiveles.MAPAS) {
-            niveles.add(new Nivel(Const.NIVEL_FILAS, Const.NIVEL_COLUMNAS, mapa));
-        }
+    public void cargaNiveles() throws IOException, ArchivoMalFormateadoException {
+        niveles = CargadorNiveles.carga("./niveles.txt");
     }
 }
