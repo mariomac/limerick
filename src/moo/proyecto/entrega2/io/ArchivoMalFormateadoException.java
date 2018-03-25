@@ -1,4 +1,4 @@
-package moo.proyecto.entrega2;
+package moo.proyecto.entrega2.io;
 
 /**
  * Excepción que se lanza cuando el archivo que contiene los niveles está mal formateado

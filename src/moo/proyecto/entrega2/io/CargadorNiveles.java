@@ -1,4 +1,4 @@
-package moo.proyecto.entrega2;
+package moo.proyecto.entrega2.io;
 
 import moo.proyecto.entrega1.Const;
 import moo.proyecto.entrega1.Nivel;

@@ -1,9 +1,11 @@
 package moo.proyecto.entrega1;
 
+import moo.proyecto.entrega2.objetos.Cuerpo;
+
 /**
  * Clase que gestiona los datos y el comportamiento relativo a la posición de la cabeza.
  */
-public class ControlCabeza {
+public class ControlCabeza extends ContenidoCelda {
 
     /**
      * Fila donde la cabeza está situada.
@@ -63,6 +65,15 @@ public class ControlCabeza {
         return altura >= Const.MAX_ALTURA;
     }
 
+    @Override
+    public String getImagen() {
+        if(isLimiteAltura()) {
+            return Const.ARCHIVO_CABEZA_ROJA;
+        } else {
+            return Const.ARCHIVO_CABEZA;
+        }
+    }
+
     /**
      * <p>Actualiza la posición de la cabeza, dado un vector de dirección <code>(df, dc)</code>
      * que indican la dirección en la que la cabeza de la serpiente
@@ -86,13 +97,18 @@ public class ControlCabeza {
         } else {
             altura = 0;
         }
-        nivel.getCelda(fila, columna).setContenido(new ContenidoCelda(Const.CELDA_CUERPO, nivel));
+        nivel.getCelda(fila, columna).setContenido(new Cuerpo());
         fila += df;
         columna += dc;
         while (nivel.getCelda(fila + 1, columna).isVacia()) {
-            nivel.getCelda(fila, columna).setContenido(new ContenidoCelda(Const.CELDA_CUERPO, nivel));
+            nivel.getCelda(fila, columna).setContenido(new Cuerpo());
             fila++;
         }
-        nivel.getCelda(fila, columna).setContenido(new ContenidoCelda(nivel, this));
+        nivel.getCelda(fila, columna).setContenido(this);
+    }
+
+    @Override
+    public int intentaPasar(int df, int dc) {
+        return Const.PASO_IMPOSIBLE;
     }
 }

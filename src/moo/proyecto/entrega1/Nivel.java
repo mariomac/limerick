@@ -1,5 +1,9 @@
 package moo.proyecto.entrega1;
 
+import moo.proyecto.entrega2.objetos.Caja;
+import moo.proyecto.entrega2.objetos.Manzana;
+import moo.proyecto.entrega2.objetos.Pared;
+
 /**
  * Cada objeto de la clase Nivel contiene toda la información correspondiente a
  * uno de los niveles del juego. Cada nivel está formado por una matriz de {@link Celda} y el
@@ -51,12 +55,24 @@ public class Nivel {
     public void inicializar() {
         for (int f = 0; f < datosMapa.length; f++) {
             for (int c = 0; c < datosMapa[f].length; c++) {
-                ContenidoCelda contenido = null;
-                if (datosMapa[f][c] == Const.CELDA_CABEZA) {
-                    controlCabeza = new ControlCabeza(this, f, c);
-                    contenido = new ContenidoCelda(this, controlCabeza);
-                } else if(datosMapa[f][c] != Const.CELDA_VACIA) {
-                    contenido = new ContenidoCelda(datosMapa[f][c], this);
+                ContenidoCelda contenido;
+                switch (datosMapa[f][c]) {
+                    case Const.CELDA_CABEZA:
+                        controlCabeza = new ControlCabeza(this, f, c);
+                        contenido = controlCabeza;
+                        break;
+                    case Const.CELDA_CAJA:
+                        contenido = new Caja(this, f, c);
+                        break;
+                    case Const.CELDA_PARED:
+                        contenido = new Pared();
+                        break;
+                    case Const.CELDA_MANZANA:
+                        contenido = new Manzana();
+                        break;
+                    default:
+                        // no añadir nada
+                        contenido = null;
                 }
                 celdas[f][c] = new Celda(f, c, contenido);
             }

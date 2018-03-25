@@ -34,6 +34,8 @@ public class Celda {
     }
 
     /**
+     * TODO: actualizar
+     *
      * <p>Realiza las acciones pertinentes a cuando la cabeza de la serpiente esté intentando pasar
      * hacia la celda.</p>
      * <p>Los parámetros <code>df, dc</code> indican la dirección en la que la cabeza de la serpiente
@@ -65,20 +67,13 @@ public class Celda {
      *           derecha; un 0, que no cambiará de columna.
      * @return El resultado del intento de paso ({@link Const#PASO_OK}, {@link Const#PASO_FIN_NIVEL}
      *         o {@link Const#PASO_IMPOSIBLE})
-     * @see ContenidoCelda#coger()
-     * @see ContenidoCelda#empujar(int, int)
+     * @see ContenidoCelda#intentaPasar(int, int)
      */
     public int intentaPasar(int df, int dc) {
         if(contenido == null) {
             return Const.PASO_OK;
         }
-        if(contenido.isCogible()) {
-            return contenido.coger();
-        }
-        if(contenido.isEmpujable()) {
-            return contenido.empujar(fila + df, columna + dc);
-        }
-        return Const.PASO_IMPOSIBLE;
+        return contenido.intentaPasar(df, dc);
     }
 
     /**

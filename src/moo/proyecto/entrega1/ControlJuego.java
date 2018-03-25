@@ -1,11 +1,10 @@
 package moo.proyecto.entrega1;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import moo.proyecto.entrega2.ArchivoMalFormateadoException;
-import moo.proyecto.entrega2.CargadorNiveles;
+import moo.proyecto.entrega2.io.ArchivoMalFormateadoException;
+import moo.proyecto.entrega2.io.CargadorNiveles;
 import moo.proyecto.gui.InterfazGrafica;
 
 /**
@@ -28,7 +27,7 @@ public class ControlJuego {
      * Identificador de nivelActual. Valor inicial: 0. Conforme se sube de nivelActual se
      * incrementa su valor hasta un valor máximo.
      */
-    private int nivelActual = 0;
+    private int nivelActual = 2;
 
     /**
      * Bucle principal del juego, se encargará de cargar los niveles y luego recorrerlos uno a uno,
