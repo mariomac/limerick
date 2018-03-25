@@ -5,7 +5,7 @@ import moo.proyecto.entrega2.objetos.Cuerpo;
 /**
  * Clase que gestiona los datos y el comportamiento relativo a la posición de la cabeza.
  */
-public class ControlCabeza extends ContenidoCelda {
+public class Cabeza extends Celda {
 
     /**
      * Fila donde la cabeza está situada.
@@ -33,7 +33,7 @@ public class ControlCabeza extends ContenidoCelda {
      * @param fila  Fila de la posición inicial de la cabeza.
      * @param columna Columna de la posición inicial de la cabeza.
      */
-    public ControlCabeza(Nivel nivel, int fila, int columna) {
+    public Cabeza(Nivel nivel, int fila, int columna) {
         this.nivel = nivel;
         this.fila = fila;
         this.columna = columna;
@@ -91,7 +91,7 @@ public class ControlCabeza extends ContenidoCelda {
      *           mover una columna hacia la izquierda; un +1, indica que quiere moverse hacia la
      *           derecha; un 0, que no cambiará de columna.
      */
-    public void mueve(int df, int dc) {
+    public void actualizaPosicion(int df, int dc) {
         if (df < 0) {
             altura++;
         } else {

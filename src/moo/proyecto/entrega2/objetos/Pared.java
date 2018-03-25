@@ -1,9 +1,9 @@
 package moo.proyecto.entrega2.objetos;
 
+import moo.proyecto.entrega1.Celda;
 import moo.proyecto.entrega1.Const;
-import moo.proyecto.entrega1.ContenidoCelda;
 
-public class Pared extends ContenidoCelda {
+public class Pared  extends Celda {
     @Override
     public String getImagen() {
         return Const.ARCHIVO_PARED;

@@ -7,20 +7,20 @@ import moo.proyecto.entrega2.objetos.Pared;
 /**
  * Cada objeto de la clase Nivel contiene toda la información correspondiente a
  * uno de los niveles del juego. Cada nivel está formado por una matriz de {@link Celda} y el
- * {@link ControlCabeza}.
+ * {@link Cabeza}.
  */
 public class Nivel {
 
     /**
-     * ControlCabeza en el tablero
+     * Cabeza en el tablero
      */
-    private ControlCabeza controlCabeza;
+    private Cabeza cabeza;
 
     /**
      * Vector bidimensional de celdas. Cada posición se corresponde con una
      * celda del tablero de juego.
      */
-    private ContenidoCelda[][] celdas;
+    private Celda[][] celdas;
 
     /**
      * Vector bidimensional de caracteres. Cada posición contiene un caracter.
@@ -44,22 +44,22 @@ public class Nivel {
      */
     public Nivel(int filas, int columnas, char[][] datosMapa) {
         this.datosMapa = datosMapa;
-        celdas = new ContenidoCelda[filas][columnas];
+        celdas = new Celda[filas][columnas];
     }
 
     /**
      * Dados los datos del mapa que se pasaron en el constructor (chars), inicializa los objetos
-     * {@link Celda} y {@link ContenidoCelda} correspondientes, que serán los que implementen la
+     * {@link Celda} correspondientes, que serán los que implementen la
      * lógica del juego.
      */
     public void inicializar() {
         for (int f = 0; f < datosMapa.length; f++) {
             for (int c = 0; c < datosMapa[f].length; c++) {
-                ContenidoCelda contenido;
+                Celda contenido;
                 switch (datosMapa[f][c]) {
                     case Const.CELDA_CABEZA:
-                        controlCabeza = new ControlCabeza(this, f, c);
-                        contenido = controlCabeza;
+                        cabeza = new Cabeza(this, f, c);
+                        contenido = cabeza;
                         break;
                     case Const.CELDA_CAJA:
                         contenido = new Caja(this, f, c);
@@ -89,7 +89,7 @@ public class Nivel {
      * @return referencia a celda que ouupa la posición indicada por los dos
      * argumentos anteriores.
      */
-    public ContenidoCelda getCelda(int fila, int col) {
+    public Celda getCelda(int fila, int col) {
         return celdas[fila][col];
     }
 
@@ -97,8 +97,16 @@ public class Nivel {
         return getCelda(fila, col) != null;
     }
 
-    public void setCelda(int fila, int col, ContenidoCelda contenido) {
+    public void setCelda(int fila, int col, Celda contenido) {
         celdas[fila][col] = contenido;
+    }
+
+    /**
+     * Devuelve el objeto que controla la {@link Cabeza} de la serpiente.
+     * @return el objeto que controla la {@link Cabeza} de la serpiente.
+     */
+    public Cabeza getCabeza() {
+        return cabeza;
     }
 
     /**
@@ -119,22 +127,20 @@ public class Nivel {
      *           derecha; un 0, que no cambiará de columna.
      * @return El resultado del movimiento, siendo {@link Const#PASO_FIN_NIVEL} el valor que indica
      *         que se ha llegado al final del nivel.
-     * @see ControlCabeza#isLimiteAltura()
-     * @see ControlCabeza#mueve(int, int)
+     * @see Cabeza#isLimiteAltura()
+     * @see Cabeza#actualizaPosicion(int, int)
      * @see Celda#intentaPasar(int, int)
      */
     public int mueveCabeza(int df, int dc) {
-        if (df < 0 && controlCabeza.isLimiteAltura()) {
+        if (df < 0 && cabeza.isLimiteAltura()) {
             return Const.PASO_IMPOSIBLE;
         }
 
-        int fila = controlCabeza.getFila() + df;
-        int columna = controlCabeza.getColumna() + dc;
-        for (hayCelda(fila, columna)) {
-            int paso = celdas[fila][columna].intentaPasar(df, dc);
-            if (paso != Const.PASO_IMPOSIBLE) {
-                controlCabeza.mueve(df, dc);
-            }
+        int fila = cabeza.getFila() + df;
+        int columna = cabeza.getColumna() + dc;
+        int paso = celdas[fila][columna].intentaPasar(df, dc);
+        if (paso != Const.PASO_IMPOSIBLE) {
+            cabeza.actualizaPosicion(df, dc);
         }
         return paso;
     }

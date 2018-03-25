@@ -1,10 +1,10 @@
 package moo.proyecto.entrega1;
 
 /**
- * Clase que representa los datos y el comportamiento del objeto que pueda estar contenido en
- * una celda.
+ * Clase para gestionar las operaciones relativas a las diferentes celdas que componen cada
+ * {@link Nivel}
  */
-public abstract class ContenidoCelda {
+public abstract class Celda {
 
     /**
      * Todo: actualizar
@@ -19,5 +19,4 @@ public abstract class ContenidoCelda {
     public abstract String getImagen();
 
     public abstract int intentaPasar(int df, int dc);
-
 }

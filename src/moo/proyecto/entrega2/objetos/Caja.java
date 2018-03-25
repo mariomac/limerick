@@ -1,10 +1,10 @@
 package moo.proyecto.entrega2.objetos;
 
+import moo.proyecto.entrega1.Celda;
 import moo.proyecto.entrega1.Const;
-import moo.proyecto.entrega1.ContenidoCelda;
 import moo.proyecto.entrega1.Nivel;
 
-public class Caja extends ContenidoCelda {
+public class Caja extends Celda {
 
     /**
      * Nivel en el que está contenida la caja. Será de utilidad cuando las cajas tengan que

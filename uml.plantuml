@@ -27,15 +27,17 @@ class Nivel {
 }
 
 class Celda {
+    -tipo:char
     -fila:int
     -columna:int
     +intentaPasar(df:int, dc:int):int
     +getImagen():String
     +isVacia():boolean
-    +setContenido(c:ContenidoCelda)
+    +setTipo(tipo:char)
+    +empujar(f:int,c:int):int
 }
 
-class ControlCabeza {
+class Cabeza {
     -fila:int
     -columna:int
     -altura:int
@@ -60,20 +62,8 @@ N1 .right. DatosNiveles
 ControlJuego .up.> DatosNiveles
 ControlJuego -left-> InterfazGrafica : gui
 ControlJuego -> "1..*" Nivel : niveles
-ContenidoCelda -up-> Nivel
 
-Nivel --> "filas x columnas" Celda
-Nivel --> ControlCabeza
+Nivel <--> "15x19" Celda
+Nivel <--> Cabeza
 
-class ContenidoCelda {
-    -tipo:char
-    +getImagen():String
-    +isEmpujable():boolean
-    +isCojible():boolean
-    +coger():int
-    +empujar(f:int,c:int):int
-}
-
-Celda --> "0..1" ContenidoCelda: contenido
-ContenidoCelda -up-> "0..1" ControlCabeza
 @enduml
