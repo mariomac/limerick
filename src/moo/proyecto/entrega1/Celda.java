@@ -16,19 +16,34 @@ public class Celda {
     private int columna;
 
     /**
-     * Contenido de la celda. Si es <code>null</code>, representa que la celda está vacía.
+     * Tipo de celda, cuyos valores podrán ser {@link Const#CELDA_CABEZA},
+     * {@link Const#CELDA_CUERPO}, {@link Const#CELDA_MANZANA}, {@link Const#CELDA_PARED},
+     * {@link Const#CELDA_CAJA} o {@link Const#CELDA_VACIA}
      */
-    private ContenidoCelda contenido; // si null, es que está vacía
+    private char tipo;
 
     /**
-     * Constructor de una celda posicionada en una fila y columna dadas, con un contenido dado
-     * (puede ser <code>null</code> si la celda está vacía)
+     * Nivel en el que está contenida la celda. Será de utilidad cuando las cajas tengan que
+     * indagar en las casillas contínuas para ver si se pueden desplazar hacia la izquierda,
+     * o hasta dónde pueden caer.
+     */
+    private Nivel nivel;
+
+    /**
+     * Constructor de una celda posicionada en una fila y columna dadas,
+     * con un contenido dado, que podrá ser del tipo {@link Const#CELDA_CABEZA},
+     * {@link Const#CELDA_CUERPO}, {@link Const#CELDA_MANZANA}, {@link Const#CELDA_PARED},
+     * {@link Const#CELDA_CAJA} o {@link Const#CELDA_VACIA}.
+     * @param nivel Nivel en el que está contenida la celda.
      * @param fila Fila en que la celda está situada.
      * @param columna Columna en que la celda está situada.
-     * @param contenido {@link ContenidoCelda} para dicha celda.
+     * @param tipo Tipo de celda, que podrá ser {@link Const#CELDA_CABEZA},
+     * {@link Const#CELDA_CUERPO}, {@link Const#CELDA_MANZANA}, {@link Const#CELDA_PARED},
+     * {@link Const#CELDA_CAJA} o {@link Const#CELDA_VACIA}
      */
-    public Celda(int fila, int columna, ContenidoCelda contenido) {
-        this.contenido = contenido;
+    public Celda(Nivel nivel, int fila, int columna, char tipo) {
+        this.nivel = nivel;
+        this.tipo = tipo;
         this.fila = fila;
         this.columna = columna;
     }
@@ -44,8 +59,8 @@ public class Celda {
      * <p>Por ejemplo:</p>
      * <ul>
      *     <li>Si la celda está vacía, no hará nada especial.</li>
-     *     <li>Si en la celda hay un contenido <i>cogible</i>, realizará la acción de cogerlo.</li>
-     *     <li>Si en la celda hay un contenido <i>empujable</i>, realizará la acción de empujarlo
+     *     <li>Si en la celda hay una manzana, realizará la opción de cogerla.</li>
+     *     <li>Si en la celda hay una caja, realizará la acción de empujarla
      *     hacia la posición dada por <code>(fila+df, columna+df)</code>.</li>
      * </ul>
      * <p>Retornará además el resultado del intento de paso:</p>
@@ -56,7 +71,7 @@ public class Celda {
      *     ha cogido una manzana).</li>
      *     <li>{@link Const#PASO_IMPOSIBLE}: si la cabeza no ha podido pasar, ya sea porque había
      *     una pared o porque había un objeto movible (caja) que no se podía mover ya que había
-     *     algún otro objeto en la celda donde se empujó.</li>
+     *     algún otro objeto en la celda donde se pretendía empujar.</li>
      * </ul>
      * @param df Dirección de la serpiente, en filas. Un -1 indica que se intenta mover una
      *           fila hacia arriba; un 0, indica que la cabeza no cambiará de fila.
@@ -65,20 +80,52 @@ public class Celda {
      *           derecha; un 0, que no cambiará de columna.
      * @return El resultado del intento de paso ({@link Const#PASO_OK}, {@link Const#PASO_FIN_NIVEL}
      *         o {@link Const#PASO_IMPOSIBLE})
-     * @see ContenidoCelda#coger()
-     * @see ContenidoCelda#empujar(int, int)
      */
     public int intentaPasar(int df, int dc) {
-        if(contenido == null) {
-            return Const.PASO_OK;
+        switch(tipo) {
+            case Const.CELDA_VACIA:
+                return Const.PASO_OK;
+            case Const.CELDA_MANZANA:
+                return Const.PASO_FIN_NIVEL;
+            case Const.CELDA_CAJA:
+                return empujar(fila + df, columna + dc);
+            default:
+                return Const.PASO_IMPOSIBLE;
         }
-        if(contenido.isCogible()) {
-            return contenido.coger();
+    }
+
+    /**
+     * Realiza la acción resultante de empujar el elemento contenido en la celda hacia las filas
+     * y columnas dadas por los argumentos <code>haciaFila</code> y <code>haciaColumna</code>:
+     * <ul>
+     *     <li>Si en la celda hay algo que no sea una caja, retorna {@link Const#PASO_IMPOSIBLE}</li>
+     *     <li>Si en la posición de destino del elemento empujado (haciaFila, haciaColumna) ya hay
+     *     algún otro objeto, retornará {@link Const#PASO_IMPOSIBLE}, ya que la serpiente sólo tiene
+     *     fuerza para arrastrar un solo objeto.</li>
+     *     <li>Si no hay nada, empujará el objeto hacia la posición (haciaFila, haciaColumna).</li>
+     *     <li>Si lo ha empujado y en esa posición no hay suelo, hará descender el objeto hasta que
+     *     encuentre un suelo (simulando el efecto de que la caja cae).</li>
+     * </ul>
+     *
+     * Si el objeto se ha podido empujar, retornará {@link Const#PASO_OK}.
+     *
+     * @param haciaFila fila hacia la que se empuja el elemento
+     * @param haciaColumna columna hacia la que se empuja el elemento
+     * @return {@link Const#PASO_OK} si se ha podido mover el objeto empujado, o
+     * (@link Const#PASO_IMPOSIBLE) en caso contrario.
+     */
+    public int empujar(int haciaFila, int haciaColumna) {
+        if (tipo != Const.CELDA_CAJA) {
+            return Const.PASO_IMPOSIBLE;
         }
-        if(contenido.isEmpujable()) {
-            return contenido.empujar(fila + df, columna + dc);
+        if (!nivel.getCelda(haciaFila, haciaColumna).isVacia()) {
+            return Const.PASO_IMPOSIBLE;
         }
-        return Const.PASO_IMPOSIBLE;
+        while(nivel.getCelda(haciaFila + 1, haciaColumna).isVacia()) {
+            haciaFila++;
+        }
+        nivel.getCelda(haciaFila,haciaColumna).setTipo(tipo);
+        return Const.PASO_OK;
     }
 
     /**
@@ -88,10 +135,24 @@ public class Celda {
      * celda está vacía.
      */
     public String getImagen() {
-        if(contenido == null) {
-            return null;
+        switch(tipo) {
+            case Const.CELDA_PARED:
+                return Const.ARCHIVO_PARED;
+            case Const.CELDA_CABEZA:
+                if(nivel.getCabeza().isLimiteAltura()) {
+                    return Const.ARCHIVO_CABEZA_ROJA;
+                } else {
+                    return Const.ARCHIVO_CABEZA;
+                }
+            case Const.CELDA_CAJA:
+                return Const.ARCHIVO_CAJA;
+            case Const.CELDA_CUERPO:
+                return Const.ARCHIVO_CUERPO;
+            case Const.CELDA_MANZANA:
+                return Const.ARCHIVO_MANZANA;
+            default:
+                return null;
         }
-        return contenido.getImagen();
     }
 
     /**
@@ -99,14 +160,14 @@ public class Celda {
      * @return <code>true</code> si la celda está vacía. <code>false</code> en caso contrario.
      */
     public boolean isVacia() {
-        return contenido == null;
+        return tipo == Const.CELDA_VACIA;
     }
 
     /**
-     * Modifica el contenido de la celda.
-     * @param contenido Nuevo contenido para la celda.
+     * Modifica el tipo del contenido de la celda.
+     * @param tipo Nuevo tipo de la celda
      */
-    public void setContenido(ContenidoCelda contenido) {
-        this.contenido = contenido;
+    public void setTipo(char tipo) {
+        this.tipo = tipo;
     }
 }

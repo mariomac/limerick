@@ -53,12 +53,12 @@ public class Const {
     /**
      * Caracter que en el mapa de caracteres de {@link Nivel} (ver {@link DatosNiveles}) indica
      * la situación de la cabeza de la serpiente.
-     * Este valor también se usa para definir el tipo de celda para un {@link ContenidoCelda} dado.
+     * Este valor también se usa para definir el tipo de una {@link Celda}.
      */
     public static final char CELDA_CABEZA = 'O';
 
     /**
-     * Caracter que define un {@link ContenidoCelda} como parte del cuerpo de la serpiente.
+     * Caracter que define una {@link Celda} como parte del cuerpo de la serpiente.
      */
     public static final char CELDA_CUERPO = 'X';
 
@@ -71,21 +71,21 @@ public class Const {
     /**
      * Caracter que en el mapa de caracteres de {@link Nivel} (ver {@link DatosNiveles}) indica
      * la situación de una pared.
-     * Este valor también se usa para definir el tipo de celda para un {@link ContenidoCelda} dado.
+     * Este valor también se usa para definir el tipo de una {@link Celda}.
      */
     public static final char CELDA_PARED = '#';
 
     /**
      * Caracter que en el mapa de caracteres de {@link Nivel} (ver {@link DatosNiveles}) indica
      * la situación de la manzana.
-     * Este valor también se usa para definir el tipo de celda para un {@link ContenidoCelda} dado.
+     * Este valor también se usa para definir el tipo de una {@link Celda}.
      */
     public static final char CELDA_MANZANA = 'M';
 
     /**
      * Caracter que en el mapa de caracteres de {@link Nivel} (ver {@link DatosNiveles}) indica
      * la situación de una caja.
-     * Este valor también se usa para definir el tipo de celda para un {@link ContenidoCelda} dado.
+     * Este valor también se usa para definir el tipo de una {@link Celda}.
      */
     public static final char CELDA_CAJA = 'K';
 

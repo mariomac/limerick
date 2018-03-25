@@ -3,7 +3,7 @@ package moo.proyecto.entrega1;
 /**
  * Clase que gestiona los datos y el comportamiento relativo a la posición de la cabeza.
  */
-public class ControlCabeza {
+public class Cabeza {
 
     /**
      * Fila donde la cabeza está situada.
@@ -31,7 +31,7 @@ public class ControlCabeza {
      * @param fila  Fila de la posición inicial de la cabeza.
      * @param columna Columna de la posición inicial de la cabeza.
      */
-    public ControlCabeza(Nivel nivel, int fila, int columna) {
+    public Cabeza(Nivel nivel, int fila, int columna) {
         this.nivel = nivel;
         this.fila = fila;
         this.columna = columna;
@@ -80,19 +80,19 @@ public class ControlCabeza {
      *           mover una columna hacia la izquierda; un +1, indica que quiere moverse hacia la
      *           derecha; un 0, que no cambiará de columna.
      */
-    public void mueve(int df, int dc) {
+    public void actualizaPosicion(int df, int dc) {
         if (df < 0) {
             altura++;
         } else {
             altura = 0;
         }
-        nivel.getCelda(fila, columna).setContenido(new ContenidoCelda(Const.CELDA_CUERPO, nivel));
+        nivel.getCelda(fila, columna).setTipo(Const.CELDA_CUERPO);
         fila += df;
         columna += dc;
         while (nivel.getCelda(fila + 1, columna).isVacia()) {
-            nivel.getCelda(fila, columna).setContenido(new ContenidoCelda(Const.CELDA_CUERPO, nivel));
+            nivel.getCelda(fila, columna).setTipo(Const.CELDA_CUERPO);
             fila++;
         }
-        nivel.getCelda(fila, columna).setContenido(new ContenidoCelda(nivel, this));
+        nivel.getCelda(fila, columna).setTipo(Const.CELDA_CABEZA);
     }
 }

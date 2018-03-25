@@ -3,14 +3,14 @@ package moo.proyecto.entrega1;
 /**
  * Cada objeto de la clase Nivel contiene toda la información correspondiente a
  * uno de los niveles del juego. Cada nivel está formado por una matriz de {@link Celda} y el
- * {@link ControlCabeza}.
+ * {@link Cabeza}.
  */
 public class Nivel {
 
     /**
-     * ControlCabeza en el tablero
+     * Cabeza en el tablero
      */
-    private ControlCabeza controlCabeza;
+    private Cabeza cabeza;
 
     /**
      * Vector bidimensional de celdas. Cada posición se corresponde con una
@@ -45,20 +45,18 @@ public class Nivel {
 
     /**
      * Dados los datos del mapa que se pasaron en el constructor (chars), inicializa los objetos
-     * {@link Celda} y {@link ContenidoCelda} correspondientes, que serán los que implementen la
+     * {@link Celda} correspondientes, que serán los que implementen la
      * lógica del juego.
      */
     public void inicializar() {
         for (int f = 0; f < datosMapa.length; f++) {
             for (int c = 0; c < datosMapa[f].length; c++) {
-                ContenidoCelda contenido = null;
                 if (datosMapa[f][c] == Const.CELDA_CABEZA) {
-                    controlCabeza = new ControlCabeza(this, f, c);
-                    contenido = new ContenidoCelda(this, controlCabeza);
-                } else if(datosMapa[f][c] != Const.CELDA_VACIA) {
-                    contenido = new ContenidoCelda(datosMapa[f][c], this);
+                    cabeza = new Cabeza(this, f, c);
+                    celdas[f][c] = new Celda(this, f, c, Const.CELDA_CABEZA);
+                } else {
+                    celdas[f][c] = new Celda(this, f, c, datosMapa[f][c]);
                 }
-                celdas[f][c] = new Celda(f, c, contenido);
             }
         }
     }
@@ -75,6 +73,14 @@ public class Nivel {
      */
     public Celda getCelda(int fila, int col) {
         return celdas[fila][col];
+    }
+
+    /**
+     * Devuelve el objeto que controla la {@link Cabeza} de la serpiente.
+     * @return el objeto que controla la {@link Cabeza} de la serpiente.
+     */
+    public Cabeza getCabeza() {
+        return cabeza;
     }
 
     /**
@@ -95,20 +101,20 @@ public class Nivel {
      *           derecha; un 0, que no cambiará de columna.
      * @return El resultado del movimiento, siendo {@link Const#PASO_FIN_NIVEL} el valor que indica
      *         que se ha llegado al final del nivel.
-     * @see ControlCabeza#isLimiteAltura()
-     * @see ControlCabeza#mueve(int, int)
+     * @see Cabeza#isLimiteAltura()
+     * @see Cabeza#actualizaPosicion(int, int)
      * @see Celda#intentaPasar(int, int)
      */
     public int mueveCabeza(int df, int dc) {
-        if (df < 0 && controlCabeza.isLimiteAltura()) {
+        if (df < 0 && cabeza.isLimiteAltura()) {
             return Const.PASO_IMPOSIBLE;
         }
 
-        int fila = controlCabeza.getFila() + df;
-        int columna = controlCabeza.getColumna() + dc;
+        int fila = cabeza.getFila() + df;
+        int columna = cabeza.getColumna() + dc;
         int paso = celdas[fila][columna].intentaPasar(df, dc);
         if (paso != Const.PASO_IMPOSIBLE) {
-            controlCabeza.mueve(df, dc);
+            cabeza.actualizaPosicion(df, dc);
         }
         return paso;
     }
