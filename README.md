@@ -27,7 +27,7 @@ The code is in Spanish language (sorry for only-English speakers!)
     - `Nivel.inicializar()` ahora instancia los objetos
     - Creadas instancias de `ContenidoCelda` en paquete "entrega2"
     
-             
+- GetCabeza borrado
         
         
        

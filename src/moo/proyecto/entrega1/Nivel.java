@@ -102,14 +102,6 @@ public class Nivel {
     }
 
     /**
-     * Devuelve el objeto que controla la {@link Cabeza} de la serpiente.
-     * @return el objeto que controla la {@link Cabeza} de la serpiente.
-     */
-    public Cabeza getCabeza() {
-        return cabeza;
-    }
-
-    /**
      * <p>Intenta mover la cabeza por el Nivel, dado un vector de dirección <code>(df, dc)</code>
      * que indican la dirección en la que la cabeza de la serpiente
      * se está moviendo, en términos de "filas, columnas". Por ejemplo, si <code>df==1</code> y
@@ -138,7 +130,12 @@ public class Nivel {
 
         int fila = cabeza.getFila() + df;
         int columna = cabeza.getColumna() + dc;
-        int paso = celdas[fila][columna].intentaPasar(df, dc);
+        int paso;
+        if (!hayCelda(fila, columna)) {
+            paso = Const.PASO_OK;
+        } else {
+            paso = celdas[fila][columna].intentaPasar(df, dc);
+        }
         if (paso != Const.PASO_IMPOSIBLE) {
             cabeza.actualizaPosicion(df, dc);
         }
