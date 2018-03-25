@@ -20,7 +20,7 @@ public class Nivel {
      * Vector bidimensional de celdas. Cada posición se corresponde con una
      * celda del tablero de juego.
      */
-    private Celda[][] celdas;
+    private ContenidoCelda[][] celdas;
 
     /**
      * Vector bidimensional de caracteres. Cada posición contiene un caracter.
@@ -44,7 +44,7 @@ public class Nivel {
      */
     public Nivel(int filas, int columnas, char[][] datosMapa) {
         this.datosMapa = datosMapa;
-        celdas = new Celda[filas][columnas];
+        celdas = new ContenidoCelda[filas][columnas];
     }
 
     /**
@@ -74,7 +74,7 @@ public class Nivel {
                         // no añadir nada
                         contenido = null;
                 }
-                celdas[f][c] = new Celda(f, c, contenido);
+                celdas[f][c] = contenido;
             }
         }
     }
@@ -89,8 +89,16 @@ public class Nivel {
      * @return referencia a celda que ouupa la posición indicada por los dos
      * argumentos anteriores.
      */
-    public Celda getCelda(int fila, int col) {
+    public ContenidoCelda getCelda(int fila, int col) {
         return celdas[fila][col];
+    }
+
+    public boolean hayCelda(int fila, int col) {
+        return getCelda(fila, col) != null;
+    }
+
+    public void setCelda(int fila, int col, ContenidoCelda contenido) {
+        celdas[fila][col] = contenido;
     }
 
     /**
@@ -122,9 +130,11 @@ public class Nivel {
 
         int fila = controlCabeza.getFila() + df;
         int columna = controlCabeza.getColumna() + dc;
-        int paso = celdas[fila][columna].intentaPasar(df, dc);
-        if (paso != Const.PASO_IMPOSIBLE) {
-            controlCabeza.mueve(df, dc);
+        for (hayCelda(fila, columna)) {
+            int paso = celdas[fila][columna].intentaPasar(df, dc);
+            if (paso != Const.PASO_IMPOSIBLE) {
+                controlCabeza.mueve(df, dc);
+            }
         }
         return paso;
     }

@@ -25,13 +25,13 @@ public class Caja extends ContenidoCelda {
     public int intentaPasar(int df, int dc) {
         int haciaFila = fila + df;
         int haciaColumna = columna + dc;
-        if (!nivel.getCelda(haciaFila, haciaColumna).isVacia()) {
+        if (nivel.hayCelda(haciaFila, haciaColumna)) {
             return Const.PASO_IMPOSIBLE;
         }
-        while(nivel.getCelda(haciaFila + 1, haciaColumna).isVacia()) {
+        while(!nivel.hayCelda(haciaFila + 1, haciaColumna)) {
             haciaFila++;
         }
-        nivel.getCelda(haciaFila,haciaColumna).setContenido(this);
+        nivel.setCelda(haciaFila,haciaColumna, this);
         this.fila = haciaFila;
         this.columna = haciaColumna;
         return Const.PASO_OK;

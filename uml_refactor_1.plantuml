@@ -1,0 +1,71 @@
+@startuml
+
+hide circle
+skinparam classAttributeIconSize 0
+
+class InterfazGrafica {
+    +{static} TECLA_ARRIBA:int
+    +{static} TECLA_IZQUIERDA:int
+    +{static} TECLA_DERECHA:int
+    +{static} TECLA_R:int
+    +leeTeclaPulsada():int
+    +colocaImagen(archivo:String, fila:int, col:int)
+}
+
+class ControlJuego {
+    -nivelEnJuego:int
+    +redibujaNivelActual()
+    +partida()
+    +cargaNiveles()
+}
+
+class Nivel {
+    -filas:int
+    -columnas:int
+    -datosMap:char[][]
+    +inicializar()
+    +getCelda(f:int, c:int):Celda
+    +mueveCabeza()
+}
+
+class Celda {
+    -fila:int
+    -columna:int
+    +intentaPasar(df:int, dc:int):int
+    +getImagen():String
+    +isVacia():boolean
+    +setContenido(c:ContenidoCelda)
+}
+
+class ControlCabeza {
+    -fila:int
+    -columna:int
+    -altura:int
+    +getFila():int
+    +getColumna():int
+    +isLimiteAltura():boolean
+    +actualizaPosicion(df:int, dc:int)
+}
+
+class CargadorNiveles {
+    +{static} carga(rutaFichero:String):List<Nivel>
+}
+
+ArchivoMalFormateadoException <.left. CargadorNiveles: lanza
+IOException <.right. CargadorNiveles: lanza
+
+ControlJuego .up.> CargadorNiveles
+ControlJuego -left-> InterfazGrafica : gui
+ControlJuego -> "1..*" Nivel : niveles
+
+Nivel --> "filas x columnas" Celda
+Nivel --> ControlCabeza
+
+abstract class "ContenidoCelda\n{abstract}" as ContenidoCelda {
+    +{abstract} getImagen():String
+    +{abstract} intentaPasar(df:int, dc:int):int
+}
+
+Celda --> "0..1" ContenidoCelda: contenido
+ContenidoCelda <|-right- ControlCabeza
+@enduml

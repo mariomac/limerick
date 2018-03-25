@@ -96,8 +96,10 @@ public class ControlJuego {
     public void redibujaNivelActual() {
         for (int f = 0; f < Const.NIVEL_FILAS; f++) {
             for (int c = 0; c < Const.NIVEL_COLUMNAS; c++) {
-                String archivo = niveles.get(nivelActual).getCelda(f, c).getImagen();
-                gui.colocaImagen(archivo, f, c);
+                if (niveles.get(nivelActual).hayCelda(f, c)) {
+                    String archivo = niveles.get(nivelActual).getCelda(f, c).getImagen();
+                    gui.colocaImagen(archivo, f, c);
+                }
             }
         }
     }

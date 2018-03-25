@@ -97,14 +97,14 @@ public class ControlCabeza extends ContenidoCelda {
         } else {
             altura = 0;
         }
-        nivel.getCelda(fila, columna).setContenido(new Cuerpo());
+        nivel.setCelda(fila, columna, new Cuerpo());
         fila += df;
         columna += dc;
-        while (nivel.getCelda(fila + 1, columna).isVacia()) {
-            nivel.getCelda(fila, columna).setContenido(new Cuerpo());
+        while (!nivel.hayCelda(fila + 1, columna)) {
+            nivel.setCelda(fila, columna, new Cuerpo());
             fila++;
         }
-        nivel.getCelda(fila, columna).setContenido(this);
+        nivel.setCelda(fila, columna, this);
     }
 
     @Override
