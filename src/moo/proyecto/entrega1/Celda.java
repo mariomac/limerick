@@ -61,7 +61,7 @@ public class Celda {
      *     <li>Si la celda está vacía, no hará nada especial.</li>
      *     <li>Si en la celda hay una manzana, realizará la opción de cogerla.</li>
      *     <li>Si en la celda hay una caja, realizará la acción de empujarla
-     *     hacia la posición dada por <code>(fila+df, columna+df)</code>.</li>
+     *     hacia la posición dada por <code>(fila+df, columna+dc)</code>.</li>
      * </ul>
      * <p>Retornará además el resultado del intento de paso:</p>
      * <ul>
