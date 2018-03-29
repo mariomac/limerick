@@ -99,6 +99,8 @@ public class ControlJuego {
                 if (niveles.get(nivelActual).hayCelda(f, c)) {
                     String archivo = niveles.get(nivelActual).getCelda(f, c).getImagen();
                     gui.colocaImagen(archivo, f, c);
+                } else {
+                    gui.colocaImagen(null, f, c);
                 }
             }
         }
