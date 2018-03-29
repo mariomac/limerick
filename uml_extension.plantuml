@@ -29,17 +29,15 @@ class Nivel {
 }
 
 class Celda {
-    -tipo:char
     -fila:int
     -columna:int
     +intentaPasar(df:int, dc:int):int
     +getImagen():String
     +isVacia():boolean
-    +setTipo(tipo:char)
-    +empujar(f:int,c:int):int
+    +setContenido(c:ContenidoCelda)
 }
 
-class Cabeza {
+class ControlCabeza {
     -fila:int
     -columna:int
     -altura:int
@@ -49,25 +47,25 @@ class Cabeza {
     +actualizaPosicion(df:int, dc:int)
 }
 
-note as N1
-    contiene un array
-    de arrays bidimensionales
-    (es decir, un array de 3 dimensiones)
-    con los datos de cada nivel
-end note
-
-class DatosNiveles {
-    +{static} MAPAS char[][][]
+class CargadorNiveles {
+    +{static} carga(rutaFichero:String):List<Nivel>
 }
 
-N1 .right. DatosNiveles
-ControlJuego .up.> DatosNiveles
+ArchivoMalFormateadoException <.left. CargadorNiveles: lanza
+IOException <.right. CargadorNiveles: lanza
+
+ControlJuego .up.> CargadorNiveles
 ControlJuego -left-> InterfazGrafica : gui
-ControlJuego -down-> "1..*" Nivel : niveles
+ControlJuego -> "1..*" Nivel : niveles
 
-Nivel <-left-> Cabeza
+Nivel --> "filas x columnas" Celda
+Nivel --> ControlCabeza
 
-Celda --> Nivel
-Nivel *--> "15x19" Celda
+abstract class "ContenidoCelda\n{abstract}" as ContenidoCelda {
+    +{abstract} getImagen():String
+    +{abstract} intentaPasar(df:int, dc:int):int
+}
 
+Celda --> "0..1" ContenidoCelda: contenido
+ContenidoCelda <|-right- ControlCabeza
 @enduml

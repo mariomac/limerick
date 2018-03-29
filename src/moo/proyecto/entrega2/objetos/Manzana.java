@@ -4,6 +4,11 @@ import moo.proyecto.entrega1.Celda;
 import moo.proyecto.entrega1.Const;
 
 public class Manzana  extends Celda {
+
+    public Manzana() {
+        super(null, 0, 0);
+    }
+
     @Override
     public String getImagen() {
         return Const.ARCHIVO_MANZANA;

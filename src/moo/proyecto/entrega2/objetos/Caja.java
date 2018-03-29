@@ -6,19 +6,9 @@ import moo.proyecto.entrega1.Nivel;
 
 public class Caja extends Celda {
 
-    /**
-     * Nivel en el que está contenida la caja. Será de utilidad cuando las cajas tengan que
-     * indagar en las casillas contínuas para ver si se pueden desplazar hacia la izquierda,
-     * o hasta dónde pueden caer.
-     */
-    private Nivel nivel;
-
-    int fila, columna;
 
     public Caja(Nivel nivel, int fila, int columna) {
-        this.nivel = nivel;
-        this.fila = fila;
-        this.columna = columna;
+        super(nivel, fila, columna);
     }
 
     @Override

@@ -8,24 +8,9 @@ import moo.proyecto.entrega2.objetos.Cuerpo;
 public class Cabeza extends Celda {
 
     /**
-     * Fila donde la cabeza está situada.
-     */
-    private int fila;
-
-    /**
-     * Columna donde la cabeza está situada.
-     */
-    private int columna;
-
-    /**
      * Altura de la cabeza: número de casillas consecutivas en las que ha subido.
      */
     private int altura = 0;
-
-    /**
-     * Nivel en juego.
-     */
-    private Nivel nivel;
 
     /**
      * Constructor.
@@ -34,25 +19,7 @@ public class Cabeza extends Celda {
      * @param columna Columna de la posición inicial de la cabeza.
      */
     public Cabeza(Nivel nivel, int fila, int columna) {
-        this.nivel = nivel;
-        this.fila = fila;
-        this.columna = columna;
-    }
-
-    /**
-     * Fila donde la cabeza está situada.
-     * @return Fila donde la cabeza está situada.
-     */
-    public int getFila() {
-        return fila;
-    }
-
-    /**
-     * Columna donde está situada la cabeza.
-     * @return Columna donde está situada la cabeza.
-     */
-    public int getColumna() {
-        return columna;
+        super(nivel, fila, columna);
     }
 
     /**

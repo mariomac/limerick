@@ -27,7 +27,7 @@ public class ControlJuego {
      * Identificador de nivelActual. Valor inicial: 0. Conforme se sube de nivelActual se
      * incrementa su valor hasta un valor máximo.
      */
-    private int nivelActual = 2;
+    private int nivelActual = 0;
 
     /**
      * Bucle principal del juego, se encargará de cargar los niveles y luego recorrerlos uno a uno,

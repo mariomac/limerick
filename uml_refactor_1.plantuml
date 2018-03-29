@@ -28,44 +28,43 @@ class Nivel {
     +mueveCabeza()
 }
 
-class Celda {
-    -fila:int
-    -columna:int
-    +intentaPasar(df:int, dc:int):int
-    +getImagen():String
-    +isVacia():boolean
-    +setContenido(c:ContenidoCelda)
-}
-
-class ControlCabeza {
-    -fila:int
-    -columna:int
-    -altura:int
+abstract class "Celda\n{abstract}" as Celda {
+    #fila:int
+    #columna:int
     +getFila():int
     +getColumna():int
+    +{abstract}intentaPasar(df:int, dc:int):int
+    +{abstract}getImagen():String
+}
+
+class Cabeza {
+    -altura:int
     +isLimiteAltura():boolean
     +actualizaPosicion(df:int, dc:int)
 }
 
-class CargadorNiveles {
-    +{static} carga(rutaFichero:String):List<Nivel>
+class DatosNiveles {
+    +{static} MAPAS char[][][]
 }
 
-ArchivoMalFormateadoException <.left. CargadorNiveles: lanza
-IOException <.right. CargadorNiveles: lanza
+ControlJuego .up.> DatosNiveles
 
-ControlJuego .up.> CargadorNiveles
 ControlJuego -left-> InterfazGrafica : gui
-ControlJuego -> "1..*" Nivel : niveles
+ControlJuego -down-> "1..*" Nivel : niveles
 
-Nivel --> "filas x columnas" Celda
-Nivel --> ControlCabeza
+Celda -up-> Nivel
+note right on link
+    subclases de Celda
+    deberán poder ver su
+    relación hacia Nivel
+end note
 
-abstract class "ContenidoCelda\n{abstract}" as ContenidoCelda {
-    +{abstract} getImagen():String
-    +{abstract} intentaPasar(df:int, dc:int):int
-}
+Nivel *-down-> "15x19" Celda
 
-Celda --> "0..1" ContenidoCelda: contenido
-ContenidoCelda <|-right- ControlCabeza
+Celda <|-- Cabeza
+Celda <|-- Caja
+Celda <|-- Cuerpo
+Celda <|-- Manzana
+Celda <|-- Pared
+
 @enduml

@@ -7,6 +7,44 @@ package moo.proyecto.entrega1;
 public abstract class Celda {
 
     /**
+     * Fila en la que se encuentra la celda
+     */
+    protected int fila;
+    /**
+     * Columna en la que se encuentra la celda
+     */
+    protected int columna;
+
+    /**
+     * Nivel en el que está contenida la celda. Será de utilidad cuando las cajas tengan que
+     * indagar en las casillas contínuas para ver si se pueden desplazar hacia la izquierda,
+     * o hasta dónde pueden caer.
+     */
+    protected Nivel nivel;
+
+    public Celda(Nivel nivel, int fila, int columna) {
+        this.fila = fila;
+        this.columna = columna;
+        this.nivel = nivel;
+    }
+
+    /**
+     * Fila donde está situada la Celda.
+     * @return Fila donde está situada la Celda.
+     */
+    public int getFila() {
+        return fila;
+    }
+
+    /**
+     * Columna donde está situada la Celda.
+     * @return Columna donde está situada la Celda.
+     */
+    public int getColumna() {
+        return columna;
+    }
+
+    /**
      * Todo: actualizar
      *
      * Retorna el nombre de archivo de imagen del objeto situado en la celda o <code>null</code>
