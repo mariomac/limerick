@@ -1,0 +1,21 @@
+@startuml
+
+hide circle
+skinparam classAttributeIconSize 0
+
+class ControlJuego {
+    -nivelEnJuego:int
+    +redibujaNivelActual()
+    +partida()
+    +cargaNiveles()
+}
+
+class CargadorNiveles {
+    +{static} carga(rutaFichero:String):List<Nivel>
+}
+
+ArchivoMalFormateadoException <.. CargadorNiveles: lanza
+IOException <.. CargadorNiveles: lanza
+
+ControlJuego .up.> CargadorNiveles: invoca
+@enduml

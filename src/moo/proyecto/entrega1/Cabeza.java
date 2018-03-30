@@ -32,15 +32,6 @@ public class Cabeza extends Celda {
         return altura >= Const.MAX_ALTURA;
     }
 
-    @Override
-    public String getImagen() {
-        if(isLimiteAltura()) {
-            return Const.ARCHIVO_CABEZA_ROJA;
-        } else {
-            return Const.ARCHIVO_CABEZA;
-        }
-    }
-
     /**
      * <p>Actualiza la posición de la cabeza, dado un vector de dirección <code>(df, dc)</code>
      * que indican la dirección en la que la cabeza de la serpiente
@@ -72,6 +63,15 @@ public class Cabeza extends Celda {
             fila++;
         }
         nivel.setCelda(fila, columna, this);
+    }
+
+    @Override
+    public String getImagen() {
+        if(isLimiteAltura()) {
+            return Const.ARCHIVO_CABEZA_ROJA;
+        } else {
+            return Const.ARCHIVO_CABEZA;
+        }
     }
 
     @Override

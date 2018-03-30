@@ -1,4 +1,4 @@
-@startuml
+@startuml asd
 
 hide circle
 skinparam classAttributeIconSize 0
@@ -20,8 +20,6 @@ class ControlJuego {
 }
 
 class Nivel {
-    -filas:int
-    -columnas:int
     -datosMap:char[][]
     +inicializar()
     +getCelda(f:int, c:int):Celda

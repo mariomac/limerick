@@ -13,15 +13,13 @@ class InterfazGrafica {
 }
 
 class ControlJuego {
-    -nivelEnJuego:int
+    -nivelActual:int
     +redibujaNivelActual()
     +partida()
     +cargaNiveles()
 }
 
 class Nivel {
-    -filas:int
-    -columnas:int
     -datosMap:char[][]
     +inicializar()
     +getCelda(f:int, c:int):Celda
