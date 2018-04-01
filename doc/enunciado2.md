@@ -34,3 +34,15 @@ UML reflejando los cambios:
 - Cambiada instanciación de `ControlJuego` en método `main`.
 
 ![UML](uml_disco.png)
+
+## Parte 4: ampliación juego
+
+Añadir nuevos elementos de juego, dejándolos a elección del usuario.
+Algunas sugerencias:
+
+- Semilla a la que se puede echar arena y agua, y crece un árbol con una
+  manzana.
+- Puerta con candado: que para pasar por ahí, la  serpiente necesite haber
+  cogido primero una llave.
+- Bomba: elemento que al tirarlo, explota y rompe todo lo que hay a su
+  alrededor.
