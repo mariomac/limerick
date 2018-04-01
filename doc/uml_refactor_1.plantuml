@@ -21,7 +21,7 @@ ControlJuego -right-> CargadorNiveles: cargador
 
 CargadorNiveles <|.. CargadorMemoria
 
-CargadorMemoria ..> DatosNiveles
+CargadorMemoria ..> DatosNiveles: usa
 
 class ControlJuego {
     -nivelEnJuego:int

@@ -14,14 +14,12 @@ public class Main {
      * @param args 
      */
     public static void main(String[] args) {
-        ControlJuego cj = new ControlJuego(new CargadorMemoria());
-        cj.partida();
-//        try {
-//            ControlJuego cj = new ControlJuego(new CargadorDisco("./niveles.txt"));
-//            cj.partida();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            ControlJuego cj = new ControlJuego(new CargadorDisco("./niveles.txt"));
+            cj.partida();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.exit(0);
     }
 

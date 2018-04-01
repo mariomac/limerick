@@ -30,4 +30,7 @@ UML reflejando los cambios:
 
 ## Parte 2: E/S disco
 
+- Añadida clase `CargadorDisco`.
+- Cambiada instanciación de `ControlJuego` en método `main`.
+
 ![UML](uml_disco.png)

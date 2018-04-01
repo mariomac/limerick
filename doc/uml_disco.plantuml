@@ -10,12 +10,31 @@ class ControlJuego {
     +cargaNiveles()
 }
 
-class CargadorNiveles {
-    +{static} carga(rutaFichero:String):List<Nivel>
+interface CargadorNiveles <<interface>> {
+    +carga():List<Nivel>
 }
 
-ArchivoMalFormateadoException <.. CargadorNiveles: lanza
-IOException <.. CargadorNiveles: lanza
+ArchivoMalFormateadoException <.. CargadorNiveles: puede lanzar
+ControlJuego -right-> CargadorNiveles: cargador
 
-ControlJuego .up.> CargadorNiveles: invoca
+CargadorNiveles <|.. CargadorMemoria
+
+CargadorMemoria ..> DatosNiveles: usa
+
+CargadorNiveles <|.. CargadorDisco
+
+class CargadorDisco {
+    -rutaFichero:String
+}
+
+class ControlJuego {
+    -nivelEnJuego:int
+    +redibujaNivelActual()
+    +partida()
+    +cargaNiveles()
+}
+
+
+IOException <.down. CargadorDisco: puede lanzar
+
 @enduml
