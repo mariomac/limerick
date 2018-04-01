@@ -12,6 +12,17 @@ class InterfazGrafica {
     +colocaImagen(archivo:String, fila:int, col:int)
 }
 
+interface CargadorNiveles <<interface>> {
+    +carga():List<Nivel>
+}
+
+ArchivoMalFormateadoException <.. CargadorNiveles: puede lanzar
+ControlJuego -right-> CargadorNiveles: cargador
+
+CargadorNiveles <|.. CargadorMemoria
+
+CargadorMemoria ..> DatosNiveles
+
 class ControlJuego {
     -nivelEnJuego:int
     +redibujaNivelActual()
@@ -45,9 +56,8 @@ class DatosNiveles {
     +{static} MAPAS char[][][]
 }
 
-ControlJuego .up.> DatosNiveles
 
-ControlJuego -left-> InterfazGrafica : gui
+InterfazGrafica <-- ControlJuego
 ControlJuego -down-> "1..*" Nivel : niveles
 
 Celda -up-> Nivel

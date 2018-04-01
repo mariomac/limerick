@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import moo.proyecto.entrega2.io.ArchivoMalFormateadoException;
+import moo.proyecto.entrega2.io.CargadorDisco;
 import moo.proyecto.entrega2.io.CargadorNiveles;
 import moo.proyecto.gui.InterfazGrafica;
 
@@ -13,6 +14,7 @@ import moo.proyecto.gui.InterfazGrafica;
  */
 public class ControlJuego {
 
+    private CargadorNiveles cargador;
     /**
      * Secuencia de los distintos niveles en los que se desarrolla el juego.
      */
@@ -28,6 +30,10 @@ public class ControlJuego {
      * incrementa su valor hasta un valor máximo.
      */
     private int nivelActual = 0;
+
+    public ControlJuego(CargadorNiveles cargador) {
+        this.cargador = cargador;
+    }
 
     /**
      * Bucle principal del juego, se encargará de cargar los niveles y luego recorrerlos uno a uno,
@@ -110,7 +116,7 @@ public class ControlJuego {
      * Crea y guarda en memoria los niveles a partir de los datos que se encuentran
      * en el fichero "./niveles.txt".
      */
-    public void cargaNiveles() throws IOException, ArchivoMalFormateadoException {
-        niveles = CargadorNiveles.carga("./niveles.txt");
+    public void cargaNiveles() throws ArchivoMalFormateadoException {
+        niveles = cargador.carga();
     }
 }

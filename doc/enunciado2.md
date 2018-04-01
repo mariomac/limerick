@@ -19,6 +19,10 @@ existentes, para adaptarse a la nueva API:
     en la superclase `Celda`.
 * Cambios en `Nivel`
     - Añadidos métodos `setCelda` y `hayCelda`
+* Cambios en carga de niveles
+    - Añadida interfaz `CargadorNiveles` y clase `ArchivoMalFormateadoException`.
+    - Añadida clase  `CargadorMemoria`, a cuyo método `carga()` se ma movido la
+      lógica que antes había en `ControlJuego.carga()`
 
 UML reflejando los cambios:
 
