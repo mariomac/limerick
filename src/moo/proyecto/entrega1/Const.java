@@ -5,6 +5,14 @@ package moo.proyecto.entrega1;
  */
 public class Const {
 
+    public static final int CELDA_AGUA = 'W';
+    public static final int CELDA_SEMILLA = 'S';
+    public static final int CELDA_ARENA = 'A';
+    public static final String ARCHIVO_SEMILLA = "/imagenes/semilla.png";
+    public static final String ARCHIVO_AGUA = "/imagenes/agua.png";
+    public static final String ARCHIVO_ARENA = "/imagenes/arena.png";
+
+
     /**
      * Número de cabezas de altura que la serpiente puede subir sobre sí misma.
      */

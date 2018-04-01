@@ -1,8 +1,6 @@
 package moo.proyecto.entrega1;
 
-import moo.proyecto.entrega2.objetos.Caja;
-import moo.proyecto.entrega2.objetos.Manzana;
-import moo.proyecto.entrega2.objetos.Pared;
+import moo.proyecto.entrega2.objetos.*;
 
 /**
  * Cada objeto de la clase Nivel contiene toda la información correspondiente a
@@ -69,6 +67,15 @@ public class Nivel {
                         break;
                     case Const.CELDA_MANZANA:
                         contenido = new Manzana();
+                        break;
+                    case Const.CELDA_ARENA:
+                        contenido = new Arena(this, f, c);
+                        break;
+                    case Const.CELDA_AGUA:
+                        contenido = new Agua(this, f, c);
+                        break;
+                    case Const.CELDA_SEMILLA:
+                        contenido = new Semilla();
                         break;
                     default:
                         // no añadir nada
