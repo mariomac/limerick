@@ -12,18 +12,18 @@
 //
 ###################
 #                 #
-#  #######  #     #  El código que lea estos archivos, ignorará todo
-#        #   #    #  lo que esté escrito a partir de Const.NIVEL_COLUMNAS (19).
-#        ######   #  Así puedo poner comentarios al lado de los niveles.
-#            #    #
-#           #     #
 #                 #
 #                 #
 #                 #
-#      W          #
-#  O   A          #
-#########         #
-#########S    M   #
+#                 #
+#                 #
+#                 #
+#    W      A     #
+#   ##      ##    #
+#                 #
+#    A  O   W     #
+### ########## #  #
+###S##########S#  #
 ###################
 //
 ###################

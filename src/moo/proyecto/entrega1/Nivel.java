@@ -75,7 +75,7 @@ public class Nivel {
                         contenido = new Agua(this, f, c);
                         break;
                     case Const.CELDA_SEMILLA:
-                        contenido = new Semilla();
+                        contenido = new Semilla(this, f, c);
                         break;
                     default:
                         // no añadir nada

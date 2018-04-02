@@ -11,7 +11,11 @@ public class Agua extends Arrastrable {
 
     @Override
     protected void nuevaPosicion() {
-
+        Celda debajo = nivel.getCelda(fila + 1, columna);
+        if ( debajo instanceof Semilla ) {
+            nivel.setCelda(fila, columna, null);
+            ((Semilla)debajo).setAgua(true);
+        }
     }
 
     @Override

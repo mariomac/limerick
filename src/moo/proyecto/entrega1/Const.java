@@ -9,8 +9,12 @@ public class Const {
     public static final int CELDA_SEMILLA = 'S';
     public static final int CELDA_ARENA = 'A';
     public static final String ARCHIVO_SEMILLA = "/imagenes/semilla.png";
+    public static final String ARCHIVO_SEMILLA_AGUA = "/imagenes/semilla_agua.png";
+    public static final String ARCHIVO_SEMILLA_ARENA = "/imagenes/semilla_arena.png";
     public static final String ARCHIVO_AGUA = "/imagenes/agua.png";
     public static final String ARCHIVO_ARENA = "/imagenes/arena.png";
+    public static final String ARCHIVO_TRONCO = "/imagenes/tronco.png";
+    public static final String ARCHIVO_RAMA = "/imagenes/rama.png";
 
 
     /**
