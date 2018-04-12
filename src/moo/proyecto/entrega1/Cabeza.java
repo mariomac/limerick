@@ -65,6 +65,14 @@ public class Cabeza extends Celda {
         nivel.setCelda(fila, columna, this);
     }
 
+    /**
+     * Retorna el nombre del archivo que contiene la imagen perteneciente a la cabeza (en verde
+     *         o en rojo, según pertoque).
+     *
+     * @return el nombre del archivo que contiene la imagen perteneciente a la cabeza (en verde
+     *         o en rojo, según pertoque).
+     * @see Celda#getImagen()
+     */
     @Override
     public String getImagen() {
         if(isLimiteAltura()) {
@@ -74,6 +82,14 @@ public class Cabeza extends Celda {
         }
     }
 
+    /**
+     * Devolverá siempre {@link Const#PASO_IMPOSIBLE} (aunque una cabeza nunca intentará pasar
+     * sobre sí misma).
+     * @param df
+     * @param dc
+     * @return {@link Const#PASO_IMPOSIBLE}
+     * @see Celda#intentaPasar(int, int)
+     */
     @Override
     public int intentaPasar(int df, int dc) {
         return Const.PASO_IMPOSIBLE;

@@ -44,20 +44,17 @@ public abstract class Celda {
         return columna;
     }
 
+
     /**
-     * Todo: actualizar
-     *
-     * Retorna el nombre de archivo de imagen del objeto situado en la celda o <code>null</code>
-     * si no hay ningún objeto. Para las celdas del tipo {@link Const#CELDA_CABEZA}, retornará la
-     * imagen de la cabeza en rojo si ésta ha llegado al límite de alturas, o de la cabeza normal
-     * en caso contrario.
-     *
-     * @return el archivo de imagen del objeto situado en la celda o "null" si no hay ningún objeto.
+     * Las subclases de {@link Celda} deben implementar este método abstracto para retornar
+     * el nombre del archivo que contiene la imagen perteneciente al objeto contenido en la celda.
+     * @return el nombre del archivo que contiene la imagen perteneciente al objeto contenido en la celda.
      */
     public abstract String getImagen();
 
     /**
-     * <p>Realiza las acciones pertinentes a cuando la cabeza de la serpiente esté intentando pasar
+     * <p>Las subclases de {@link Celda} deberán implementar este método abstracto para
+     * realizar las acciones pertinentes a cuando la cabeza de la serpiente esté intentando pasar
      * hacia la celda.</p>
      * <p>Los parámetros <code>df, dc</code> indican la dirección en la que la cabeza de la serpiente
      * se está moviendo, en términos de "filas, columnas". Por ejemplo, si <code>df==1</code> y
@@ -67,9 +64,10 @@ public abstract class Celda {
      * <p>Por ejemplo:</p>
      * <ul>
      *     <li>Si la celda está vacía, no hará nada especial.</li>
-     *     <li>Si en la celda hay una manzana, realizará la opción de cogerla.</li>
-     *     <li>Si en la celda hay una caja, realizará la acción de empujarla
-     *     hacia la posición dada por <code>(fila+df, columna+dc)</code>.</li>
+     *     <li>Si en la celda hay una {@link moo.proyecto.entrega2.objetos.Manzana}, realizará
+     *     la acción de cogerla.</li>
+     *     <li>Si en la celda hay una {@link moo.proyecto.entrega2.objetos.Caja}, realizará la
+     *     acción de empujarla hacia la posición dada por <code>(fila+df, columna+dc)</code>.</li>
      * </ul>
      * <p>Retornará además el resultado del intento de paso:</p>
      * <ul>
