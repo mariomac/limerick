@@ -100,10 +100,24 @@ public class Nivel {
         return celdas[fila][col];
     }
 
+    /**
+     * Retorna {@code true} si hay una celda en la fila y columna dadas,
+     * {@code false} en caso contrario.
+     * @param fila Fila donde se pretende verificar si hay una celda.
+     * @param col Columna donde se pretende mirar si hay una celda.
+     * @return {@code true} si hay una celda en la fila y columna dadas,
+     *         {@code false} en caso contrario.
+     */
     public boolean hayCelda(int fila, int col) {
         return getCelda(fila, col) != null;
     }
 
+    /**
+     * Pone una {@link Celda} en la determinada fila y columna.
+     * @param fila Fila donde se pondrá la celda.
+     * @param col Columna donde se pondrá la celda.
+     * @param contenido Implementación de la {@link Celda} a situar.
+     */
     public void setCelda(int fila, int col, Celda contenido) {
         celdas[fila][col] = contenido;
     }
@@ -115,8 +129,10 @@ public class Nivel {
      * <code>dc==0</code>, quiere decir que la serpiente se está moviendo una celda hacia abajo.
      *  Si <code>df==0</code> y <code>dc==-1</code>, quiere decir que la serpiente se
      * está moviendo una celda hacia la izquierda.</p>
-     * <p>El sistema primero debe comprobar si se puede pasar a celda de la fila y la columna
-     * contigua a la cabeza. Si se puede, entonces se hace efectivo el paso.</p>
+     * <p>El sistema primero debe comprobar si hay una celda en la posición de la fila yla columna
+     * contigua a la cabeza. Si no hay ninguna celda, o se puede pasar a esa celda
+     * (según el resultado de la llamada al método {@link Celda#intentaPasar(int, int)}),
+     * entonces se hace efectivo el paso.</p>
      * <p>Si el movimiento es hacia arriba, también debe comprobar que no se haya superado el
      * límite de alturas de la cabeza.</p>
      * @param df Dirección de la serpiente, en filas. Un -1 indica que se intenta mover una

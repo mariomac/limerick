@@ -1,7 +1,6 @@
 package moo.proyecto.entrega1;
 
 import moo.proyecto.entrega2.io.CargadorDisco;
-import moo.proyecto.entrega2.io.CargadorMemoria;
 
 import java.io.IOException;
 

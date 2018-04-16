@@ -1,12 +1,10 @@
 package moo.proyecto.entrega1;
 
-import java.io.IOException;
-import java.util.List;
-
 import moo.proyecto.entrega2.io.ArchivoMalFormateadoException;
-import moo.proyecto.entrega2.io.CargadorDisco;
 import moo.proyecto.entrega2.io.CargadorNiveles;
 import moo.proyecto.gui.InterfazGrafica;
+
+import java.util.List;
 
 /**
  * Clase que implementa el control del juego. Se encarga de gestionar la carga de los datos de los
@@ -31,6 +29,11 @@ public class ControlJuego {
      */
     private int nivelActual = 0;
 
+    /**
+     * Instancia el control del juego
+     * @param cargador La clase implementadora de {@link CargadorNiveles} que
+     *                 proporcione acceso a la carga de los niveles.
+     */
     public ControlJuego(CargadorNiveles cargador) {
         this.cargador = cargador;
     }
@@ -113,8 +116,10 @@ public class ControlJuego {
     }
 
     /**
-     * Crea y guarda en memoria los niveles a partir de los datos que se encuentran
-     * en el fichero "./niveles.txt".
+     * Crea y guarda en memoria los niveles a partir de los datos devueltos por
+     * la implementación de {@link CargadorNiveles} pasados en el constructor
+     * de esta clase.
+     * @see {@link #ControlJuego(CargadorNiveles)}
      */
     public void cargaNiveles() throws ArchivoMalFormateadoException {
         niveles = cargador.carga();

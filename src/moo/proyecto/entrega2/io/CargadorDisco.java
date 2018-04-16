@@ -10,10 +10,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase que carga los datos de los niveles a partir de un fichero de texto.
+ */
 public class CargadorDisco implements CargadorNiveles {
 
     private String rutaFichero;
 
+    /**
+     * Instancia un Cargador de Disco a partir de la ruta a un fichero de texto
+     * que contiene los datos de los niveles (ver fichero de ejemplo <pre>niveles.txt</pre>.
+     * @param rutaFichero ruta a un fichero de texto que contiene los datos de los niveles.
+     * @throws IOException Si el fichero no existe, o éste es un directorio (mirar
+     *         javadoc de la clase {@link File})
+     * @see File#exists()
+     * @see File#isDirectory()
+     */
     public CargadorDisco(String rutaFichero) throws IOException {
         File f = new File(rutaFichero);
         if (!f.exists()) {
@@ -38,6 +50,7 @@ public class CargadorDisco implements CargadorNiveles {
      * <li>Una línea que empieza con los caracteres '//' es una línea a ignorar</li>
      * <li>Una línea que empieza con los caracteres '-- FIN --' indica que ya se han leído todos los niveles,
      * y la lectura de datos acaba ahí.</li>
+     *
      * <p>Mirar como ejemplo el archivo 'niveles.txt'.</p>
      *
      * @throws ArchivoMalFormateadoException Si el archivo no tiene el formato descrito en la documentación
